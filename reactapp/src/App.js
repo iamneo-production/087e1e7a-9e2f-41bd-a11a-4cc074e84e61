@@ -9,30 +9,30 @@ import Login from "./components/customer/Login";
 import Register from "./components/customer/Signup";
 import { Admin, User } from "./components/customer/Auth";
 import Placeorder  from "./components/customer/Placeorder";
-import Place from "./components/customer/a";
-import PlaceOrderForm from "./components/customer/order[1]";
+import ReviewForm from "./components/customer/Review";
+import './App.css';
+
 
 function App() {
-
-  return (
-    
+    return (
     <Router>
     <Routes>
         <Route  path="/" element={<Login/>} />
-        
         <Route path="/Signup" element={<Register/> }/>
-        <Route path="/Login" element={<Login/>}/>
-        <Route path="/placeorder" element={<Placeorder />} />
-
         
+        <Route element={<User/>}>
         <Route path="/Homepage" element={<Homepage/>} />
-        <Route path="/Myorders" element={<Myorders/>} />
+        <Route path="/placeorder" element={<Placeorder />} />
+        <Route path="/Myorders" element={<Myorders/> } />
+        <Route path="/review" element={<ReviewForm/>}/>
+        </Route>
 
+        <Route element={<Admin/>}>
         <Route path="/Admingifts" element={ <AdminGifts/> } />
-        <Route path="/Adminthemes" element={<AdminThemes/>} />
+        <Route path="/Adminthemes" element={<AdminThemes/> } />
         <Route path="/Adminvieworders" element={<AdminViewOrders/> } />
+        </Route>
 
-    
     </Routes>
     </Router>  
     
