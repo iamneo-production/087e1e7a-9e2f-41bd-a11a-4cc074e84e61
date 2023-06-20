@@ -23,7 +23,7 @@ const ReviewForm = () => {
     event.preventDefault();
          const data = {    
         name: name,
-        comment : comment,
+        comments : comment,
         
     }
       const url = "https://8080-ecdbffcdccababadfbbdfdacbcfcecaabcfba.project.examly.io/review/insertreview";
