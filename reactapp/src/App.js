@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-<<<<<<< HEAD
 import logo from './logo.svg';
 =======
 =======
@@ -21,14 +20,15 @@ import AdminReview from "./components/Admin/Review/AdminReview";
 import MyProfile from "./components/Customer/Myprofile/Myprofile";
 <<<<<<< HEAD
 >>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
-=======
->>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
 import './App.css';
 
 function App() {
   return (
 <<<<<<< HEAD
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> b28bffbab001a6d01c349a4da93d7e07c08ca0ac
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -45,6 +45,8 @@ function App() {
         </a>
       </header>
     </div>
+<<<<<<< HEAD
+=======
 =======
 =======
 >>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
@@ -73,6 +75,7 @@ function App() {
     </Router>  
 <<<<<<< HEAD
 >>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
+>>>>>>> b28bffbab001a6d01c349a4da93d7e07c08ca0ac
   );
 }
 

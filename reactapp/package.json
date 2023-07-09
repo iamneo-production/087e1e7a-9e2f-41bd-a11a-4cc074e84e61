@@ -12,6 +12,11 @@
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
 =======
+<<<<<<< HEAD
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "4.0.3",
+=======
     "axios": "^1.4.0",
 <<<<<<< HEAD
 =======
@@ -34,12 +39,16 @@
     "react-scripts": "4.0.3",
     "react-toastify": "^9.0.3",
 >>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
+<<<<<<< HEAD
 =======
     "react-router-dom": "^6.13.0",
     "react-scripts": "^5.0.1",
     "react-toastify": "^9.0.3",
     "run": "^1.4.0",
 >>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
+=======
+>>>>>>> b28bffbab001a6d01c349a4da93d7e07c08ca0ac
+>>>>>>> 630c714fcd44c5538eb0ac0e077ff4571efb88b3
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -59,6 +68,8 @@
 =======
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
   "jest": {
     "moduleNameMapper": {
       "axios": "axios/dist/node/axios.cjs"
@@ -66,8 +77,12 @@
   },
 >>>>>>> 9bd65877725971d15d0cb3625b9636564a33c07b
 >>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
+<<<<<<< HEAD
 =======
 >>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
+=======
+>>>>>>> b28bffbab001a6d01c349a4da93d7e07c08ca0ac
+>>>>>>> 630c714fcd44c5538eb0ac0e077ff4571efb88b3
   "browserslist": {
     "production": [
       ">0.2%",
