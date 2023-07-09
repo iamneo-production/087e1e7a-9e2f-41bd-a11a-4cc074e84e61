@@ -1,8 +1,5 @@
-<<<<<<< HEAD
+
 import logo from './logo.svg';
-=======
-=======
->>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
 import React from "react";
 import { BrowserRouter as Router,Route,Routes} from 'react-router-dom';
 import Login from './components/Auth/Login/Login';
