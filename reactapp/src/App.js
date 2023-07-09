@@ -6,7 +6,7 @@ import Login from './components/Auth/Login/Login';
 import Signup from './components/Auth/Signup/Signup';
 import { Admin, User } from './components/Auth/Auth';
 import Order from './components/Customer/Order/Order';
-import Placeorder from './components/Customer/Placeorder/Placeorder'
+import Placeorder from './components/Customer/Placeorder/Placeorder';
 import Cart from  './components/Customer/Cart/Cart';
 import HoamePage from './components/Customer/HoamePage/HoamePage';
 import HomePage from "./components/Admin/HomePage/HomePage"
