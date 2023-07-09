@@ -1,12 +1,10 @@
-
-import logo from './logo.svg';
 import React from "react";
 import { BrowserRouter as Router,Route,Routes} from 'react-router-dom';
 import Login from './components/Auth/Login/Login';
 import Signup from './components/Auth/Signup/Signup';
 import { Admin, User } from './components/Auth/Auth';
 import Order from './components/Customer/Order/Order';
-import Placeorder from './components/Customer/Placeorder/Placeorder';
+import Placeorder from './components/Customer/Placeorder/Placeorder'
 import Cart from  './components/Customer/Cart/Cart';
 import HoamePage from './components/Customer/HoamePage/HoamePage';
 import HomePage from "./components/Admin/HomePage/HomePage"
@@ -19,22 +17,6 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
     <Router>
     <Routes>
         <Route  path="/" element={<Login/>} />
@@ -62,9 +44,3 @@ function App() {
 }
 
 export default App;
-
-  );
-}
-
-export default App;
-
