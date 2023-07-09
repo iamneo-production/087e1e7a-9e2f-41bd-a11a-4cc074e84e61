@@ -7,16 +7,21 @@
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
 =======
     "axios": "^1.4.0",
 <<<<<<< HEAD
+=======
+    "axios": "^1.4.0",
+>>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
     "react": "^17.0.2",
     "react-bootstrap": "^2.8.0",
     "react-dom": "^17.0.2",
     "react-icons": "^4.10.1",
+<<<<<<< HEAD
     "react-router-dom": "^6.14.0",
 =======
     "bootstrap": "^5.3.0",
@@ -29,6 +34,12 @@
     "react-scripts": "4.0.3",
     "react-toastify": "^9.0.3",
 >>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
+=======
+    "react-router-dom": "^6.13.0",
+    "react-scripts": "^5.0.1",
+    "react-toastify": "^9.0.3",
+    "run": "^1.4.0",
+>>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -44,6 +55,7 @@
     ]
   },
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 <<<<<<< HEAD
 =======
@@ -54,6 +66,8 @@
   },
 >>>>>>> 9bd65877725971d15d0cb3625b9636564a33c07b
 >>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
+=======
+>>>>>>> DotNet_React_AE_Customized_NameBoard_Gift_2023-vasudha2
   "browserslist": {
     "production": [
       ">0.2%",
