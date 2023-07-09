@@ -6,9 +6,29 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
+<<<<<<< HEAD
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+=======
+    "axios": "^1.4.0",
+<<<<<<< HEAD
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.8.0",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.10.1",
+    "react-router-dom": "^6.14.0",
+=======
+    "bootstrap": "^5.3.0",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.7.4",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.10.1",
+    "react-router-dom": "^6.13.0",
+>>>>>>> 9bd65877725971d15d0cb3625b9636564a33c07b
+    "react-scripts": "4.0.3",
+    "react-toastify": "^9.0.3",
+>>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -23,6 +43,17 @@
       "react-app/jest"
     ]
   },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
+  },
+>>>>>>> 9bd65877725971d15d0cb3625b9636564a33c07b
+>>>>>>> 7bb85aaa0df656ed55ed049478d067799ad7402d
   "browserslist": {
     "production": [
       ">0.2%",
