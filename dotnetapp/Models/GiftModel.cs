@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 
 namespace dotnetapp.Models
-{
+{    
     public class GiftModel
     {
         public int giftId { get; set; }
