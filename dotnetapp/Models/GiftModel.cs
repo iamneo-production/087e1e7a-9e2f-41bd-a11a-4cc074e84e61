@@ -4,7 +4,11 @@ using System.Linq;
 using System.Web;
 
 namespace dotnetapp.Models
+<<<<<<< HEAD
 {    
+=======
+{
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
     public class GiftModel
     {
         public int giftId { get; set; }

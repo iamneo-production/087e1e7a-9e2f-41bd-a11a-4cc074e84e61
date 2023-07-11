@@ -15,6 +15,13 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0" />
     <PackageReference Include="Moq" Version="4.18.4" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+=======
+>>>>>>> b28bffbab001a6d01c349a4da93d7e07c08ca0ac
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
     <PackageReference Include="NUnit" Version="3.13" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>

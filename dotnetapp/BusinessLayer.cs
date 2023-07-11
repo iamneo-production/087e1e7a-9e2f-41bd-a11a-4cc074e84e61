@@ -6,14 +6,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace dotnetapp
 {
+<<<<<<< HEAD
     
+=======
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
     public class BusinessLayer
     {
         
        
   private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
 
+<<<<<<< HEAD
         // AuthController
+=======
+      // AuthController
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
         public bool isUserPresent(LoginModel lm)
         {
             return _dataAccessLayer.isUserPresent(lm);
@@ -190,5 +197,9 @@ namespace dotnetapp
         {
             return _dataAccessLayer.Postreview(review);
         }
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
     }
 }

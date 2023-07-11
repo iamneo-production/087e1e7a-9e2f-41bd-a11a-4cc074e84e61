@@ -5,7 +5,10 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
 using dotnetapp.Models;
 using System.Data.SqlClient;
 using System.Data;

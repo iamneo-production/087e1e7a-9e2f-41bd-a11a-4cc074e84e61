@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Data.SqlClient;
+<<<<<<< HEAD
 using System.Data;  
 
+=======
+using System.Data;
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
 using System.Xml.Linq;
 using dotnetapp.Models;
 namespace dotnetapp
@@ -263,9 +267,17 @@ namespace dotnetapp
                 cmd.CommandText = "UserModel_GetByList";
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
+<<<<<<< HEAD
                 conn.Open();
                 SqlDataReader dr=cmd.ExecuteReader();
                 while (dr.Read())
+=======
+                SqlDataAdapter sda = null;
+                sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
                 {
                     UserModel um = new UserModel();
                     um.email = dr["email"].ToString();
@@ -279,10 +291,13 @@ namespace dotnetapp
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 string errorMessage = ex.Message;
                 string stackTrace = ex.StackTrace;
                 Console.WriteLine("An error occurred: " + errorMessage);
                 Console.WriteLine("An error occurred: " + stackTrace);
+=======
+>>>>>>> 7ad2ed3b3d6d68083feb77a5d711038f8c6fbfbe
                 return new List<UserModel>();
             }
         }
