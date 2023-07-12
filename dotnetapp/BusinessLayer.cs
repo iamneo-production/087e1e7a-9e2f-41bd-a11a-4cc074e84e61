@@ -12,7 +12,7 @@ namespace dotnetapp
        
   private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
 
-        // AuthController
+      // AuthController
         public bool isUserPresent(LoginModel lm)
         {
             return _dataAccessLayer.isUserPresent(lm);
@@ -189,5 +189,6 @@ namespace dotnetapp
         {
             return _dataAccessLayer.Postreview(review);
         }
+        
     }
 }
