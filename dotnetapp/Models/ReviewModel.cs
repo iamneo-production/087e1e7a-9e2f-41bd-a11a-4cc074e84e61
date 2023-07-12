@@ -5,7 +5,6 @@ using System.Web;
 
 namespace dotnetapp.Models
 {
-    
     public class ReviewModel
     {
         public int orderId {get; set;}

@@ -22,7 +22,7 @@ namespace dotnetapp
             conn = new SqlConnection(connectionString);
         }
        
-       
+   
         //AuthController
         public bool isUserPresent(LoginModel lm)
         { 
