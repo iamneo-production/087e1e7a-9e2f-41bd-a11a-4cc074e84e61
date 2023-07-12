@@ -1,45 +1,41 @@
 import React from "react";
 import { BrowserRouter as Router,Route,Routes} from 'react-router-dom';
-import Login from './components/Auth/Login/Login';
-import Signup from './components/Auth/Signup/Signup';
-import { Admin, User } from './components/Auth/Auth';
-import Order from './components/Customer/Order/Order';
-import Placeorder from './components/Customer/Placeorder/Placeorder'
-import Cart from  './components/Customer/Cart/Cart';
-import HoamePage from "./components/Customer/Hoamepage/HoamePage";
-import HomePage from "./components/Admin/HomePage/HomePage"
-import Adminthemes from "./components/Admin/Adminthemes/Adminthemes";
-import Orders from './components/Admin/Orders/Orders'; 
-import Review from './components/User/Review/Review';
-import AdminReview from "./components/Admin/Review/AdminReview";
-import MyProfile from "./components/Customer/Myprofile/Myprofile";
+import Homepage from "./components/customer/Homepage";
+import AdminGifts from "./components/Admin/Admingifts";
+import AdminThemes from "./components/Admin/Adminthemes";
+import Myorders from "./components/customer/Myorders";
+import AdminViewOrders from "./components/Admin/Adminvieworders";
+import Login from "./components/customer/Login";
+import Register from "./components/customer/Signup";
+import { Admin, User } from "./components/customer/Auth";
+import Placeorder  from "./components/customer/Placeorder";
+import ReviewForm from "./components/customer/Review";
 import './App.css';
 
+
 function App() {
-  return (
+    return (
     <Router>
     <Routes>
         <Route  path="/" element={<Login/>} />
-        <Route path="/Signup" element={<Signup/> }/>
+        <Route path="/Signup" element={<Register/> }/>
         
         <Route element={<User/>}>
-        <Route path="/Homepage" element={<HoamePage/>} />
+        <Route path="/Homepage" element={<Homepage/>} />
         <Route path="/placeorder" element={<Placeorder />} />
-        <Route path="/Cart" element={<Cart/> } />
-        <Route path="/Myorders" element={<Order/> } />
-        <Route path="/myprofile" element={<MyProfile/> }/>
-        <Route path="/Review" element={<Review/>} />
+        <Route path="/Myorders" element={<Myorders/> } />
+        <Route path="/review" element={<ReviewForm/>}/>
         </Route>
 
         <Route element={<Admin/>}>
-        <Route path="/Admingifts" element={ <HomePage/> } />
-        <Route path="/Adminthemes" element={<Adminthemes/> } />
-        <Route path="/Adminvieworders" element={<Orders/> } />
-        <Route path="/AdminReview" element={<AdminReview/> } />
+        <Route path="/Admingifts" element={ <AdminGifts/> } />
+        <Route path="/Adminthemes" element={<AdminThemes/> } />
+        <Route path="/Adminvieworders" element={<AdminViewOrders/> } />
         </Route>
 
     </Routes>
     </Router>  
+    
   );
 }
 
