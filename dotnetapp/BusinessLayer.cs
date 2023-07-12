@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using dotnetapp.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace dotnetapp
 {
     public class BusinessLayer
     {
-        
-       
   private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
 
       // AuthController
