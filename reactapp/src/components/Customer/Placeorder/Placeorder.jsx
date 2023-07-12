@@ -14,7 +14,7 @@ function Placeorder() {
   
 
   const[Name,setName]=useState('');
-const[Date,setDate]=useState('');
+const[orderDate,setDate]=useState('');
 const[Adress,setAddress]=useState('');
 const[PhoneNo,setPhone]=useState('');
 const EmailId=(localStorage.getItem("email"));
@@ -65,7 +65,7 @@ const handleSubmit=(e)=>{
   e.preventDefault();
         const Orderdata={
         orderName:Name,
-        orderDate:Date,
+        orderDate:orderDate,
         orderAddress:Adress,
         orderPhone:PhoneNo,
         orderEmail:localStorage.getItem("email"),
