@@ -51,7 +51,6 @@ const [selectedThemes, setSelectedThemes] = useState([]);
   axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
     .then(response => {
       setThemes(response.data);
-     // console.log(themes);
     })
     .catch(error => {
       console.log(error);
