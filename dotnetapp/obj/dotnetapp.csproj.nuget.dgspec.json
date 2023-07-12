@@ -68,6 +68,16 @@
               "target": "Package",
               "version": "[3.13.0, )"
             },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+=======
+>>>>>>> b28bffbab001a6d01c349a4da93d7e07c08ca0ac
+>>>>>>> 6f25df192883a3293ea057a39960f7b2117bd7fe
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[5.6.3, )"
