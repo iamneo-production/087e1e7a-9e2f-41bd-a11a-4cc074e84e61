@@ -42,7 +42,7 @@ namespace dotnetapp
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        { 
+        {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -53,7 +53,7 @@ namespace dotnetapp
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseCors(options => options.WithOrigins("https://8081-ecaebdccabadfbbdfdacbcefeddcbcbaffb.project.examly.io/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
