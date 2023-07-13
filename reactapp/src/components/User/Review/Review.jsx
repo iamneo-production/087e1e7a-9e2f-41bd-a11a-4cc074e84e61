@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form,Button } from 'react-bootstrap';
-import './Review.css'
-import { useNavigate } from 'react-router-dom';
-import NavigationMenu from './Navbar';
+import { useNavigate,useLocation } from 'react-router-dom';
 import { FcApproval } from "react-icons/fc";
+import NavigationMenu from '../../Customer/Navbar/Navbar'
+import './Review.css';
 
-const ReviewForm = () => {
+const Review = () => {
   const [name, setName] = useState('');
-  const [comment, setComment] = useState('');
-  
-
+  const [comments, setComment] = useState('');
+  const location = useLocation();
+  const orderId = location.state;
+  console.log(orderId);
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
@@ -23,10 +24,10 @@ const ReviewForm = () => {
     event.preventDefault();
          const data = {    
         name: name,
-        comment : comment,
-        
+        comments : comments,
+        orderId : orderId
     }
-      const url = "https://8080-ecdbffcdccababadfbbdfdacbcfcecaabcfba.project.examly.io/review/insertreview";
+      const url = "https://8080-ecdbffcdccababadfbbdfdacbcfcecaabcfba.project.examly.io/insertreview";
       axios.post(url,data).then((result)=>{
         console.log(result.data);
         if(result.data==="inserted sucessfully")
@@ -34,7 +35,7 @@ const ReviewForm = () => {
           navigate("/homepage");
         }
       }).catch((error)=>{
-        console.log(error)
+        console.log(error);
       })
     
     // Reset the form
@@ -58,7 +59,8 @@ const ReviewForm = () => {
       <Form.Group className="mb-3" >
         <Form.Label>Comment</Form.Label>
         <Form.Control as="textarea" rows={3} id="comment"
-          value={comment}
+          data-testid="comments"
+          value={comments}
           onChange={handleCommentChange}
           required/>
       </Form.Group>
@@ -68,4 +70,4 @@ const ReviewForm = () => {
   );
 };
 
-export default ReviewForm;
+export default Review;
