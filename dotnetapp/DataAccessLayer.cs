@@ -22,7 +22,7 @@ namespace dotnetapp
             conn = new SqlConnection(connectionString);
         }
        
-       
+   
         //AuthController
         public bool isUserPresent(LoginModel lm)
         { 
@@ -262,10 +262,12 @@ namespace dotnetapp
                 cmd.CommandText = "UserModel_GetByList";
                 cmd.Connection = conn;
                 cmd.CommandType = CommandType.StoredProcedure;
-                conn.Open();
-                SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
+                SqlDataAdapter sda = null;
+                sda = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                sda.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
                     UserModel um = new UserModel();
                     um.email = dr["email"].ToString();
                     um.password = dr["password"].ToString();
@@ -274,7 +276,6 @@ namespace dotnetapp
                     um.userRole = dr["userRole"].ToString();
                     umlist.Add(um);
                 }
-                conn.Close();
                 return umlist;
             }
             catch (Exception ex)
