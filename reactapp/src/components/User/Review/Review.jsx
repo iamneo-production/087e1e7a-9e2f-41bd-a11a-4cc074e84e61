@@ -24,13 +24,8 @@ const Review = () => {
     event.preventDefault();
          const data = {    
         name: name,
-<<<<<<< HEAD:reactapp/src/components/User/Review/Review.jsx
         comments : comments,
         orderId : orderId
-=======
-        comments : comment,
-        
->>>>>>> d5b2b3bc6804ed3188b8d914e37d9669d559f332:reactapp/src/components/customer/Review.jsx
     }
       const url = "https://8080-ecdbffcdccababadfbbdfdacbcfcecaabcfba.project.examly.io/insertreview";
       axios.post(url,data).then((result)=>{

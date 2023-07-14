@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter as Router,Route,Routes} from 'react-router-dom';
 import Login from './components/Auth/Login/Login';
 import Signup from './components/Auth/Signup/Signup';
-import { Admin, User } from './components/Auth/Auth';
+import { Admin, User } from './components/Auth/Auth.jsx';
 import Order from './components/Customer/Order/Order';
 import Placeorder from './components/Customer/Placeorder/Placeorder'
 import Cart from  './components/Customer/Cart/Cart';
-import HoamePage from './components/Customer/HoamePage/HoamePage';
+import HoamePage from "./components/Customer/Hoamepage/HoamePage";
 import HomePage from "./components/Admin/HomePage/HomePage"
 import Adminthemes from "./components/Admin/Adminthemes/Adminthemes";
 import Orders from './components/Admin/Orders/Orders'; 
