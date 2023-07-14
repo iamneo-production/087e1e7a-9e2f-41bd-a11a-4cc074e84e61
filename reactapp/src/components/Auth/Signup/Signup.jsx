@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './Signup.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Col, Container, Form,Card } from "react-bootstrap";
+import { Col,  Form } from "react-bootstrap";
 import {Button,Row} from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

@@ -120,7 +120,7 @@ go
 create procedure UserModel_GetByList
 As
 Begin
-Select * From UserModel
+Select email,password,username,mobileNumber,userRole From UserModel
 End;
 go
 
@@ -162,7 +162,7 @@ GO
 
 --procedure to get theme by id
 ------------------------------------
-create procedure ThemeModel_GetByList
+create or Replace procedure ThemeModel_GetByList
 as
 begin
     select themeId, themeName, themeDetails, themePrice
