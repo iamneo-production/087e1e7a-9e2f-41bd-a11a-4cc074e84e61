@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import './Signup.css'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Col,  Form } from "react-bootstrap";
-import {Button,Row} from "react-bootstrap";
+import {Button ,Row ,Col ,Form} from "react-bootstrap";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,7 +26,7 @@ const Signup=()=>{
     // Email validation
     if (!email) {
       errors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if  (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Invalid email address';
     }
     // Password validation
