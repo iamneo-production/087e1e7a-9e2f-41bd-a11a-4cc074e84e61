@@ -26,7 +26,7 @@ const Signup=()=>{
     // Email validation
     if (!email) {
       errors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    } else if  (!/\S+@\S+\.\S+/.test(email)) {
       errors.email = 'Invalid email address';
     }
     // Password validation
