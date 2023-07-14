@@ -1,10 +1,10 @@
 --LoginModel Table
 ---------------------
-create table LoginModel(email varchar(70) primary key ,password varchar(20));
+create table LoginModel(email varchar2(70) primary key ,password varchar2(20));
 
 --AdminModel Table
 --------------------
-create table AdminModel(email varchar(70) primary key,password varchar(20),mobileNumber varchar(14),userRole varchar(10));
+create table AdminModel(email varchar2(70) primary key,password varchar2(20),mobileNumber varchar2(14),userRole varchar2(10));
 
 --UserModel Table
 -------------------
