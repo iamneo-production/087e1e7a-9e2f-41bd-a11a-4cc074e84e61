@@ -47,7 +47,6 @@ const AddGift = (props)=>{
           })
         }
           
-
       }
     return(
         <Form>
