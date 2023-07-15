@@ -10,7 +10,7 @@ const EditOrder=(props)=>{
   const [themes,setThemes] = useState([]);
   useEffect(() => {
   //Get themes Api
-  axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
+  axios.get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
     .then(response => {
       setThemes(response.data);
     })
@@ -48,7 +48,7 @@ const handleSubmit=(e)=>{
           orderQuantity:Quantity
       }
       console.log(order)
-      axios.put('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
+      axios.put('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
         console.log(result.data);
         if(result.data === "order updated"){
           props.onOrderEdited();

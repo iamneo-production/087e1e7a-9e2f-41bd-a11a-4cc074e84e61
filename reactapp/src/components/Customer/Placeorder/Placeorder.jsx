@@ -48,7 +48,7 @@ const [selectedThemes, setSelectedThemes] = useState([]);
   const [themes,setThemes] = useState([]);
   useEffect(() => {
   //Get themes Api
-  axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
+  axios.get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
     .then(response => {
       setThemes(response.data);
     })
@@ -77,7 +77,7 @@ const handleSubmit=(e)=>{
     }
    
     console.log(Orderdata)
-    axios.post('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrdersCart',Orderdata).then((result)=>{
+    axios.post('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrdersCart',Orderdata).then((result)=>{
       console.log(result.data);
       if(result.data === "Order added"){
         navigate('/Cart');

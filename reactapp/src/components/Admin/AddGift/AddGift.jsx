@@ -37,7 +37,7 @@ const AddGift = (props)=>{
           giftQuantity : GiftQuantity
         }
         if(giftData.giftName!=="" && giftData.giftImage!=="" && giftData.giftPrice!=="" && giftData.giftDetails!==""){
-          const url = "https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addGift";
+          const url = "https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addGift";
           axios.post(url,giftData).then((result)=>{
             if(result.data==="Gift added")
             toast.success("Gift Added");

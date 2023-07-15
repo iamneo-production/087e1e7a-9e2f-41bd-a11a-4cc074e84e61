@@ -17,7 +17,7 @@ const MyProfile = () => {
   const email = localStorage.getItem('email');
   useEffect(() => {
     axios
-      .get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getuserbyemail', {
+      .get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getuserbyemail', {
         params: {
           email: email
         }
@@ -33,7 +33,7 @@ const MyProfile = () => {
     const data = { email: email, userName: userName };
 
     axios
-      .put('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/updateusername', data)
+      .put('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/updateusername', data)
       .then((result) => {
         console.log(result.data);
         if (result.data === 'Username Updated') {
@@ -50,7 +50,7 @@ const MyProfile = () => {
     e.preventDefault();
     const data = { email: email, mobileNumber: mobileNumber };
     axios
-      .put('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/updatemobilenumber', data)
+      .put('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/updatemobilenumber', data)
       .then((result) => {
         console.log(result.data);
         if (result.data === 'Mobile Number Updated') {
@@ -66,7 +66,7 @@ const MyProfile = () => {
   const updatePassword = () => {
     const data = { email: email, password: newPassword };
     axios
-      .put('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/updatepassword', data)
+      .put('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/updatepassword', data)
       .then((result) => {
         console.log(result.data);
         if (result.data === 'Password Updated') {
@@ -81,7 +81,7 @@ const MyProfile = () => {
   const handlePasswordUpdate = () => {
     const data = { email: email, password: pass };
     axios
-      .post('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login', data)
+      .post('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login', data)
       .then((result) => {
         if (result.data === true) {
           if (newPassword === confirmPassword) {
