@@ -773,10 +773,11 @@ namespace WebApp
         }
 
         //Order Controller
-         public string addOrdersCart(OrderModel order)
+        public string addOrdersCart(OrderModel order)
         {
-            
-            try{
+
+            try
+            {
                 SqlCommand cmd = new SqlCommand("addOrdersCart", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@orderName", order.orderName);
@@ -800,16 +801,19 @@ namespace WebApp
                 {
                     return "Order not added";
                 }
-            }catch(Exception ex){
+            }
+            catch (Exception ex)
+            {
                 return ex.Message;
             }
-           
+
 
         }
-        
+
         public string addOrders(string userEmail)
         {
-           try{
+            try
+            {
                 SqlCommand cmd = new SqlCommand("addOrders", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@userEmail", userEmail);
@@ -831,18 +835,20 @@ namespace WebApp
                 }
                 else
                     return "Order not added";
-           }catch(Exception ex){
-            return ex.Message;
-           }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
         }
         private string GetThemeModelXml(List<ThemeModel> themeModels)
         {
-                XElement xml = new XElement("ThemeModel",
-                themeModels.Select(theme => new XElement("Theme",
-                    new XElement("ThemeName", theme.themeName),
-                    new XElement("ThemePrice", theme.themePrice)
-                ))
-            );
+            XElement xml = new XElement("ThemeModel",
+            themeModels.Select(theme => new XElement("Theme",
+                new XElement("ThemeName", theme.themeName),
+                new XElement("ThemePrice", theme.themePrice)
+            ))
+        );
 
             return xml.ToString();
         }
@@ -851,28 +857,114 @@ namespace WebApp
         public IActionResult viewPlacedOrders(string userEmail)
         {
 
-                DataTable dt = new DataTable();
-                SqlCommand cmd = new SqlCommand("getOrdersCart", conn);
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand("getOrdersCart", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@userEmail", userEmail);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+            foreach (DataRow row in dt.Rows)
+            {
+                Dictionary<string, object> order = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    order[col.ColumnName] = row[col];
+                }
+                orders.Add(order);
+            }
+            return new JsonResult(orders);
+
+
+        }
+
+
+        public List<OrderModel> viewOrders(string userEmail)
+        {
+            try
+            {
+                List<OrderModel> orderlist = new List<OrderModel>();
+                SqlCommand cmd = new SqlCommand("getCart", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@userEmail", userEmail);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
-            foreach (DataRow row in dt.Rows)
-            {
-            Dictionary<string, object> order = new Dictionary<string, object>();
-            foreach (DataColumn col in dt.Columns)
-            {
-                order[col.ColumnName] = row[col];
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    OrderModel or = new OrderModel();
+                    or.orderId = Convert.ToInt32(dr["orderId"]);
+                    or.orderPrice = Convert.ToInt32(dr["orderPrice"]);
+                    or.orderName = dr["orderName"].ToString();
+                    or.orderDescription = dr["orderDescription"].ToString();
+                    or.orderEmail = dr["orderEmail"].ToString();
+                    or.orderQuantity = dr["orderQuantity"].ToString();
+                    or.orderDate = Convert.ToDateTime(dr["orderDate"]);
+                    or.orderPhone = dr["orderPhone"].ToString();
+                    or.orderAddress = dr["orderAddress"].ToString();
+                    or.giftModel.giftId = Convert.ToInt32(dr["GiftId"]);
+                    or.themeModel = GetThemeModelFromXml(dr["themeModel"].ToString());
+                    orderlist.Add(or);
+                }
+                conn.Close();
+                return orderlist;
             }
-            orders.Add(order);
+            catch(Exception ex)
+            {
+                List<OrderModel> orderlist = new List<OrderModel>();
+                return orderlist;
             }
-                return new JsonResult(orders);
-            
-           
+
         }
-       
-       
+
+        public OrderModel viewPlacedOrderBYEmail(int orderId)
+        {
+                OrderModel or = new OrderModel();
+                SqlCommand cmd = new SqlCommand("getOrdersCart_ById", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@orderId", orderId);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    or.orderId= Convert.ToInt32(dr["orderId"]);
+                    or.orderPrice = Convert.ToInt32(dr["orderPrice"]);
+                    or.orderName = dr["orderName"].ToString();
+                    or.orderDescription = dr["orderDescription"].ToString();
+                    or.orderEmail= dr["orderEmail"].ToString();
+                    or.orderQuantity = dr["orderQuantity"].ToString();
+                    or.orderDate = Convert.ToDateTime(dr["orderDate"]);
+                    or.orderPhone = dr["orderPhone"].ToString();
+                    or.orderAddress = dr["orderAddress"].ToString();
+                    or.giftModel.giftId = Convert.ToInt32(dr["GiftId"]);
+                    or.themeModel = GetThemeModelFromXml(dr["themeModel"].ToString());
+
+                }
+            return or;
+
+        }
+        private List<ThemeModel> GetThemeModelFromXml(string xml)
+        {
+            List<ThemeModel> themeModels = new List<ThemeModel>();
+            XElement root = XElement.Parse(xml);
+
+            foreach (XElement themeElement in root.Elements("Theme"))
+            {
+                ThemeModel themeModel = new ThemeModel();
+                themeModel.themeName = themeElement.Element("ThemeName").Value;
+                themeModel.themePrice = Convert.ToInt32(themeElement.Element("ThemePrice").Value);
+
+                themeModels.Add(themeModel);
+            }
+
+            return themeModels;
+        }
+
+
+
         public string editOrder(int orderID, OrderModel order)
         {
             try
@@ -885,12 +977,12 @@ namespace WebApp
                 cmd.Parameters.AddWithValue("@orderName", order.orderName);
                 cmd.Parameters.AddWithValue("@orderDescription", order.orderDescription);
                 cmd.Parameters.AddWithValue("@themeModel", GetThemeModelXml(order.themeModel));
-               
+
                 cmd.Parameters.AddWithValue("@orderDate", order.orderDate);
-              
+
                 cmd.Parameters.AddWithValue("@orderAddress", order.orderAddress);
                 cmd.Parameters.AddWithValue("@orderPhone", order.orderPhone);
-                
+
                 cmd.Parameters.AddWithValue("@orderQuantity", order.orderQuantity);
                 conn.Open();
                 int rowaffect = cmd.ExecuteNonQuery();
@@ -909,7 +1001,7 @@ namespace WebApp
                 return ex.Message;
             }
         }
-       
+
         public string deleteOrder(int orderID)
         {
             try
@@ -937,29 +1029,29 @@ namespace WebApp
                 return ex.Message;
             }
         }
-        
-        public JsonResult  viewOrder()
+
+        public JsonResult viewOrder()
         {
-            
-                DataTable dt = new DataTable();
-                SqlCommand cmd = new SqlCommand("ViewOrders", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-              
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
-                foreach (DataRow row in dt.Rows)
-                {
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand("ViewOrders", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+            foreach (DataRow row in dt.Rows)
+            {
                 Dictionary<string, object> order = new Dictionary<string, object>();
                 foreach (DataColumn col in dt.Columns)
                 {
-                order[col.ColumnName] = row[col];
+                    order[col.ColumnName] = row[col];
                 }
                 orders.Add(order);
-                }
-                return new JsonResult(orders);
-                
-              
+            }
+            return new JsonResult(orders);
+
+
         }
         public string AdminDeleteOrder(int orderID)
         {
@@ -988,25 +1080,25 @@ namespace WebApp
                 return ex.Message;
             }
         }
-        public JsonResult  MyOrders(string email)
-        {            
-                DataTable dt = new DataTable();
-                SqlCommand cmd = new SqlCommand("UserViewOrders", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@email", email);
-                SqlDataAdapter da = new SqlDataAdapter(cmd);
-                da.Fill(dt);
-                List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
-                foreach (DataRow row in dt.Rows)
-                {
+        public JsonResult MyOrders(string email)
+        {
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand("UserViewOrders", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@email", email);
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+            foreach (DataRow row in dt.Rows)
+            {
                 Dictionary<string, object> order = new Dictionary<string, object>();
                 foreach (DataColumn col in dt.Columns)
                 {
-                order[col.ColumnName] = row[col];
+                    order[col.ColumnName] = row[col];
                 }
                 orders.Add(order);
-                }
-                return new JsonResult(orders);
+            }
+            return new JsonResult(orders);
         }
 
         //Review Controller
@@ -1015,7 +1107,7 @@ namespace WebApp
         {
 	     List<ReviewModel> reviews=new List<ReviewModel>();
          SqlDataReader sdr=null;
-            SqlCommand cmd = new SqlCommand("Get_review", conn);
+            SqlCommand cmd = new SqlCommand("GetReview", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             conn.Open();
             sdr = cmd.ExecuteReader();
@@ -1035,7 +1127,7 @@ namespace WebApp
         public string Postreview(ReviewModel review)
         {
             try{
-            SqlCommand cmd = new SqlCommand("Insert_review", conn);
+            SqlCommand cmd = new SqlCommand("InsertReview", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@orderId", review.orderId);
             cmd.Parameters.AddWithValue("@name", review.name);
