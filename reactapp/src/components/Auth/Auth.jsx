@@ -18,5 +18,3 @@ import { Navigate, Outlet} from "react-router-dom"
     return <Outlet/>
     else return  <Navigate to={"/"}/>;
     }
-
-

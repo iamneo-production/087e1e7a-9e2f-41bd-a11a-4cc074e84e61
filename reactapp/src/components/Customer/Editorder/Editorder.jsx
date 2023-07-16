@@ -2,6 +2,7 @@ import React, {useState,useEffect} from "react";
 import { Modal,Button,Form,DropdownButton,Dropdown } from "react-bootstrap";
 import { FaRegEdit } from "react-icons/fa";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const EditOrder=(props)=>{ 
     const order = props.orderData;
@@ -12,7 +13,6 @@ const EditOrder=(props)=>{
   axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
     .then(response => {
       setThemes(response.data);
-     // console.log(themes);
     })
     .catch(error => {
       console.log(error);
@@ -23,7 +23,7 @@ const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
 
 const[Name,setName]=useState('');
-const[Date,setDate]=useState('');
+const[orderDate,setDate]=useState('');
 const[Adress,setAddress]=useState('');
 const[PhoneNo,setPhone]=useState('');
 const[Descripation,setDescripation]=useState('');
@@ -37,7 +37,7 @@ const handleSubmit=(e)=>{
     e.preventDefault();
           const Orderdata={
           orderName:Name,
-          orderDate:Date,
+          orderDate:orderDate,
           orderAddress:Adress,
           orderPhone:PhoneNo,
           orderEmail:localStorage.getItem("email"), 
@@ -55,7 +55,7 @@ const handleSubmit=(e)=>{
           handleClose();
         }
       }).catch((error)=>{
-        alert(error);
+        toast.warning(error);
       })
      
   }
