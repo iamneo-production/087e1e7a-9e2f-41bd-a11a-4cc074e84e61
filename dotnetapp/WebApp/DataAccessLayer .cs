@@ -916,7 +916,7 @@ namespace WebApp
             {
 
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "DeleteOrdersCartbyId";
+                cmd.CommandText = "DeleteOrdersCart";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@orderID", orderID);
@@ -1015,7 +1015,7 @@ namespace WebApp
         {
 	     List<ReviewModel> reviews=new List<ReviewModel>();
          SqlDataReader sdr=null;
-            SqlCommand cmd = new SqlCommand("Getreview", conn);
+            SqlCommand cmd = new SqlCommand("Get_review", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             conn.Open();
             sdr = cmd.ExecuteReader();
@@ -1035,7 +1035,7 @@ namespace WebApp
         public string Postreview(ReviewModel review)
         {
             try{
-            SqlCommand cmd = new SqlCommand("Insertreview", conn);
+            SqlCommand cmd = new SqlCommand("Insert_review", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@orderId", review.orderId);
             cmd.Parameters.AddWithValue("@name", review.name);
