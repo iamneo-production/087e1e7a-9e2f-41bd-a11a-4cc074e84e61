@@ -15,7 +15,7 @@ const Myorders=()=> {
   const [effect,setEffect]=useState('');
   
   const fetchOrders=()=>{
-    axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getOrdersCart', {
+    axios.get('https://8080-dcfcfccddeabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getOrdersCart', {
       params: {
         userEmail: email
       }
@@ -34,7 +34,7 @@ const Myorders=()=> {
 
      const handlePay=()=>{
       //Add order api
-      axios.post('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrders', email, {
+      axios.post('https://8080-dcfcfccddeabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrders', email, {
         headers: {
           'Content-Type': 'application/json'
         }
