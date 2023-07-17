@@ -87,7 +87,7 @@ const toggleConfirmPasswordVisibility = () => {
           userrole : userRole,
       }
         
-        const url = "https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addUser";
+        const url = "https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addUser";
         axios.post(url,data).then((result)=>{
           console.log(result.data);
           if(result.data === "User Added" || result.data==="user exists"||result.data==='Admin Added'){
