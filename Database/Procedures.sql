@@ -120,7 +120,7 @@ go
 create procedure UserModel_GetByList
 As
 Begin
-Select * From UserModel
+Select email,password,username,mobileNumber,userRole From UserModel
 End;
 go
 
@@ -162,12 +162,14 @@ GO
 
 --procedure to get theme by id
 ------------------------------------
-create procedure ThemeModel_GetByList
-as
-begin
+create or replace package body ThemePackage As
+ procedure ThemeModel_GetByList
+ as
+ begin
     select themeId, themeName, themeDetails, themePrice
     from ThemeModel;
-end;
+ end;
+ end ThemePackage;
 GO
 
 --procedure to dalete theme by id
@@ -219,12 +221,14 @@ GO
 
 --procedure to get gift details
 -----------------------------------------
-create procedure GiftModel_GetAll
-as
-begin
+create or replace package body GiftPackage as
+ procedure GiftModel_GetAll
+ as
+ begin
     select giftId, giftName, giftPrice, GiftImageUrl, giftQuantity, giftDetails
     from GiftModel;
-end;
+ end;
+ end GiftPackage;
 GO
 
 --procedure to delete gift by id
@@ -398,15 +402,17 @@ go
 
 --procedure to view Orders admin side
 ------------------------------------------
-create procedure ViewOrders
-as
-begin
+create or replace package body OrderPackage as
+ procedure ViewOrders
+ as
+ begin
     SELECT ot.orderid, ut.userName, gt.giftName, gt.giftPrice,ot.orderAddress
     , ot.orderQuantity
     FROM Orders ot
     INNER JOIN UserModel ut ON ot.orderemail = ut.email
     INNER JOIN GiftModel gt ON ot.GiftId = gt.giftId;
-end;
+ end;
+ end OrderPackage;
 go
 
 --procedure to view Orders user side
