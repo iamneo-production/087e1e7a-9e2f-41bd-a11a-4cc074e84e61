@@ -78,7 +78,7 @@ const AddGift = (props) => {
     setErrors(formErrors);
 
     if (!hasErrors) {
-      const url = "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addGift";
+      const url = "https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addGift";
       axios.post(url, giftData)
         .then((result) => {
           if (result.data === "Gift added") {

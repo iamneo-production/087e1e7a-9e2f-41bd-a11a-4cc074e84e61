@@ -30,7 +30,7 @@ const Addtheme = (props) =>{
         
             //Add theme Api
             if(themeData.themename!=="" && themeData.themeDetails!=="" && themeData.themeprice!==""){
-          const url = "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
+          const url = "https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
           axios.post(url,themeData).then((result)=>{
             console.log(result.data)
             if(result.data==="Theme Added"){
