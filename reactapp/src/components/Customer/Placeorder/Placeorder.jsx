@@ -17,25 +17,34 @@ function Placeorder() {
   const [PhoneNo, setPhone] = useState('');
   const EmailId = localStorage.getItem('email');
   const [Description, setDescription] = useState('');
-  const [Quantity, setOrderQuantity] = useState(1); // Default quantity is 1
+  const [Quantity, setOrderQuantity] = useState('');
+  const [themePrice, setThemePrice] = useState(0);
+  const Price = (gift.giftPrice + themePrice) * Quantity;
+  const giftModel = gift;
+  const [themeModel, setThemeModel] = useState([]);
   const [selectedThemes, setSelectedThemes] = useState([]);
   const [errors, setErrors] = useState({});
 
   const handleThemeSelect = (event) => {
     const { value, checked } = event.target;
-
+    const selectedTheme = themes.find((theme) => theme.themeName === value);
+    let currentPrice = themePrice;
     if (checked) {
       setSelectedThemes((prevSelectedThemes) => [...prevSelectedThemes, value]);
     } else {
       setSelectedThemes((prevSelectedThemes) =>
         prevSelectedThemes.filter((theme) => theme !== value)
       );
+      setThemeModel((prevThemeModel) =>
+        prevThemeModel.filter((theme) => theme.themeName !== selectedTheme.themeName)
+      );
+      setThemePrice(currentPrice - selectedTheme.themePrice);
     }
   };
 
   const [themes, setThemes] = useState([]);
   useEffect(() => {
-    // Get themes API
+    //Get themes API
     axios
       .get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
       .then((response) => {
@@ -93,9 +102,9 @@ function Placeorder() {
         orderPhone: PhoneNo,
         orderEmail: EmailId,
         orderDescription: Description,
-        orderPrice: totalCost,
-        giftModel: gift,
-        ThemeModel: themes.filter((theme) => selectedThemes.includes(theme.themeName)),
+        orderPrice: Price,
+        giftModel: giftModel,
+        ThemeModel: themeModel,
         orderQuantity: Quantity,
       };
 
@@ -114,12 +123,13 @@ function Placeorder() {
     }
   };
 
-  const today = new Date();
-  const minDate = today.toISOString().split('T')[0];
+  const today = new Date().toISOString().split('T')[0];
 
   return (
     <div>
-      <NavigationMenu />
+      <div>
+        <NavigationMenu />
+      </div>
       <Form className="placeorderform">
         <div>
           <Form.Group className="mb-3">
@@ -137,7 +147,7 @@ function Placeorder() {
               type="date"
               placeholder="Enter the order date"
               id="enterDate"
-              min={minDate}
+              min={today}
               onChange={(e) => setDate(e.target.value)}
               required
             />
@@ -172,7 +182,7 @@ function Placeorder() {
             <Form.Control type="text" value={gift.giftPrice} id="orderPrice" disabled />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Control type="text" value={gift.giftName} id="giftModel" disabled />
+            <Form.Control type="text" value={giftModel.giftName} id="giftModel" disabled />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Control
@@ -188,8 +198,9 @@ function Placeorder() {
               type="number"
               placeholder="Enter Quantity"
               id="quantity"
-              value={Quantity}
-              onChange={(e) => setOrderQuantity(e.target.value)}
+              onChange={(e) => {
+                setOrderQuantity(e.target.value);
+              }}
               required
             />
             {errors.Quantity && <span className="error-message">{errors.Quantity}</span>}
@@ -197,21 +208,21 @@ function Placeorder() {
 
           {themes.length > 0 && (
             <>
-              <Dropdown className="d-inline" align="end">
-                <DropdownButton variant="outline-secondary" id="selectThemeModel" title="Select the Theme">
-                  {themes.map((theme) => (
-                    <Form.Check
-                      key={theme.themeId}
-                      type="checkbox"
-                      id={theme.themeId}
-                      label={`${theme.themeName} - ${theme.themePrice}`}
-                      value={theme.themeName}
-                      checked={selectedThemes.includes(theme.themeName)}
-                      onChange={handleThemeSelect}
-                    />
-                  ))}
-                </DropdownButton>
-              </Dropdown>
+          <Dropdown className="d-inline" align="end">
+            <DropdownButton variant="outline-secondary" id="selectThemeModel" title="Select the Theme">
+              {themes.map((theme) => (
+                <Form.Check
+                  key={theme.themeId}
+                  type="checkbox"
+                  id={theme.themeId}
+                  label={theme.themeName + ' - ' + theme.themePrice}
+                  value={theme.themeName}
+                  checked={selectedThemes.includes(theme.themeName)}
+                  onChange={handleThemeSelect}
+                />
+              ))}
+            </DropdownButton>
+          </Dropdown>
               {errors.ThemeModel && <span className="error-message">{errors.ThemeModel}</span>}
             </>
           )}
