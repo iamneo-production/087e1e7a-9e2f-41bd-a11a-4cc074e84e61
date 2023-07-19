@@ -15,7 +15,7 @@ function AdminThemes(){
     const [effect,setEffect] = useState('');
     useEffect(() => {
     //Get themes Api
-    axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
+    axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
       .then(response => {
         setThemes(response.data);
       
