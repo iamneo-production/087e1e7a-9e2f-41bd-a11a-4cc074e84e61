@@ -1,11 +1,12 @@
 import React,{ useState} from "react";
-import {Button,Row,Col, Form} from "react-bootstrap";
+import {Button,Row,Col, Form,InputGroup } from "react-bootstrap";
 import './Login.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { FiMail } from 'react-icons/fi';
 
 
 
@@ -62,11 +63,18 @@ const Login=(props)=>{
             </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Email address:</Form.Label>
-        <Form.Control type="email" data-testid="email" id="email" placeholder=" Enter email"   onChange={(e) => setEmail(e.target.value)} />
+        <InputGroup>
+      <InputGroup.Text> <FiMail /> </InputGroup.Text>
+        <Form.Control type="text" data-testid="email" id="email" placeholder=" Enter email"   onChange={(e) => setEmail(e.target.value)} />
+        </InputGroup>
       </Form.Group>
 
       <Form.Group className="mb-3">
         <Form.Label>Password:</Form.Label>
+        <InputGroup>
+    <InputGroup.Text>
+      <RiLockPasswordFill />
+    </InputGroup.Text>
         <Form.Control
             type={showPassword ? 'text' : 'password'}
             data-testid="password"
@@ -75,6 +83,7 @@ const Login=(props)=>{
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+        </InputGroup>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Check

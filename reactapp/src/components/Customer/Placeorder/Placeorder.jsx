@@ -77,7 +77,7 @@ const handleSubmit=(e)=>{
     }
    
     console.log(Orderdata)
-    axios.post('hhttps://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrdersCart',Orderdata).then((result)=>{
+    axios.post('https://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrdersCart',Orderdata).then((result)=>{
       console.log(result.data);
       if(result.data === "Order added"){
         navigate('/Cart');
