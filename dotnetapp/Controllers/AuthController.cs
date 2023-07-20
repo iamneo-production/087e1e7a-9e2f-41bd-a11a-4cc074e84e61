@@ -25,7 +25,7 @@ namespace dotnetapp.Controllers
         }
         [HttpPost]
         [Route("admin/login")]
-        public bool isAdminPresent(LoginModel lm)
+        public string isAdminPresent(LoginModel lm)
         { 
            return bal.isAdminPresent(lm);
         }

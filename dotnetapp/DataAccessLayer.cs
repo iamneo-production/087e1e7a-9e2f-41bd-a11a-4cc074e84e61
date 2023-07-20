@@ -24,56 +24,114 @@ namespace dotnetapp
        
    
         //AuthController
-        public bool isUserPresent(LoginModel lm)
+        public string isUserPresent(LoginModel lm)
         { 
-            try{
-            
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "LoginModel_IsUserPresent";
-            cmd.CommandType = CommandType.StoredProcedure;
+              try
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = conn;
+                            cmd.Parameters.AddWithValue("@email", lm.email);
+                            cmd.Parameters.AddWithValue("@password", lm.password);
 
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@email", lm.email);
-            cmd.Parameters.AddWithValue("@password", lm.password);
-            conn.Open();
-            int count = (int)cmd.ExecuteScalar();
-            conn.Close();
-            if (count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            }catch{
-                return false;
-            }
-        }
-       
-        public bool isAdminPresent(LoginModel lm)
+                            // Check if the email and password match in the LoginModel table
+                            cmd.CommandText = "SELECT COUNT(*) FROM LoginModel WHERE email = @email AND password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+                            conn.Open();
+                            int userCount = (int)cmd.ExecuteScalar();
+                            conn.Close();
+
+                            if (userCount > 0)
+                            {
+                                return "valid"; // Both email and password are valid
+                            }
+                            else
+                            {
+                                // Check if the email exists in the LoginModel table
+                                cmd.CommandText = "SELECT COUNT(*) FROM LoginModel WHERE email = @email";
+                                conn.Open();
+                                int userEmailCount = (int)cmd.ExecuteScalar();
+                                conn.Close();
+
+                                // Check if the password exists in the LoginModel table
+                                cmd.CommandText = "SELECT COUNT(*) FROM LoginModel WHERE password = @password";
+                                conn.Open();
+                                int userPasswordCount = (int)cmd.ExecuteScalar();
+                                conn.Close();
+
+                                if (userEmailCount == 0 && userPasswordCount == 0)
+                                {
+                                    return "invalid"; // Both email and password are invalid
+                                }
+                                else if (userEmailCount == 0)
+                                {
+                                    return "invalid_email"; // Email doesn't exist in the LoginModel table
+                                }
+                                else
+                                {
+                                    return "invalid_password"; // Password is incorrect
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any exceptions that might occur during database access or query execution.
+                        return "error";
+                    }
+                }
+        public string isAdminPresent(LoginModel lm)
         { 
-            try{
-           
-                SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "AdminModel_IsAdminPresent";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = conn;
-            cmd.Parameters.AddWithValue("@email", lm.email);
-            cmd.Parameters.AddWithValue("@password", lm.password);
-            conn.Open();
-            int count = (int)cmd.ExecuteScalar();
-            conn.Close();
-            if (count > 0)
+             try
             {
-                return true;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@email", lm.email);
+                    cmd.Parameters.AddWithValue("@password", lm.password);
+
+                    // Check if the email and password match in the LoginModel table
+                    cmd.CommandText = "SELECT COUNT(*) FROM AdminModel WHERE email = @email AND password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+                    conn.Open();
+                    int userCount = (int)cmd.ExecuteScalar();
+                    conn.Close();
+
+                    if (userCount > 0)
+                    {
+                        return "valid"; // Both email and password are valid
+                    }
+                    else
+                    {
+                        // Check if the email exists in the LoginModel table
+                        cmd.CommandText = "SELECT COUNT(*) FROM AdminModel WHERE email = @email";
+                        conn.Open();
+                        int userEmailCount = (int)cmd.ExecuteScalar();
+                        conn.Close();
+
+                        // Check if the password exists in the LoginModel table
+                        cmd.CommandText = "SELECT COUNT(*) FROM AdminModel WHERE password = @password";
+                        conn.Open();
+                        int userPasswordCount = (int)cmd.ExecuteScalar();
+                        conn.Close();
+
+                        if (userEmailCount == 0 && userPasswordCount == 0)
+                        {
+                            return "invalid"; // Both email and password are invalid
+                        }
+                        else if (userEmailCount == 0)
+                        {
+                            return "invalid_email"; // Email doesn't exist in the LoginModel table
+                        }
+                        else
+                        {
+                            return "invalid_password"; // Password is incorrect
+                        }
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return false;
-            }
-            }catch{
-                return false;
+                // Handle any exceptions that might occur during database access or query execution.
+                return "error";
             }
         }
         
