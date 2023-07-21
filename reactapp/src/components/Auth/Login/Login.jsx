@@ -20,23 +20,30 @@ const Login=(props)=>{
         const data = { email : email,password : password }
         axios.post("https://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login", data)
         .then((result) => {
-              if(result.data === true){
+              if(result.data === "valid"){
                 localStorage.setItem("email",email);
                 localStorage.setItem("isAuth" ,true);
                 localStorage.setItem("role" ,"User");
                 navigate('/Homepage');
-              }else {
+              }
+              else{
                 axios.post("https://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/login", data)
-                .then((result) => {
-                      if(result.data === true){
+                .then((result1) => {
+                      if(result1.data === "valid"){
 
                         localStorage.setItem("isAuth" ,true);
                         localStorage.setItem("role" ,"Admin");
                         navigate('/admingifts');
                     }
-                    else
-                    {
+                    else 
+                    {  if (result1.data === "invalid_email" ||result.data === "invalid_email") {
+                      toast.warning("Invalid email");
+                    } else if (result1.data === "invalid_password"||result.data === "invalid_password") {
+                      toast.warning("Invalid password");
+                    } 
+                       else {
                       toast.warning("Invalid Email or Password");
+                    }
                     }
                 }).catch((error) => {toast.warning(error)});
               }

@@ -831,9 +831,70 @@ namespace dotnetapp
 
         //Order Controller
          public string addOrdersCart(OrderModel order)
-        {
+        {  try
+             {
+                 // Check if the gift quantity is sufficient
+                 SqlCommand cmdCheckGiftQuantity = new SqlCommand("SELECT giftQuantity FROM GiftModel WHERE giftId = @GiftId", conn);
+                 cmdCheckGiftQuantity.Parameters.AddWithValue("@GiftId", order.giftModel.giftId);
+                 conn.Open();
+                 int availableQuantity = (int)cmdCheckGiftQuantity.ExecuteScalar();
+                 conn.Close();
+
+                 if (availableQuantity >= Convert.ToInt32(order.orderQuantity))
+                 {
+                     // Update gift quantity in the database
+                     SqlCommand cmdUpdateGiftQuantity = new SqlCommand("UPDATE GiftModel SET giftQuantity = giftQuantity  -  @orderQuantity  WHERE giftId =  @GIftId ", conn);
+                     cmdUpdateGiftQuantity.Parameters.AddWithValue("@GiftId", order.giftModel.giftId);
+                     cmdUpdateGiftQuantity.Parameters.AddWithValue("@orderQuantity", Convert.ToInt32(order.orderQuantity));
+                     conn.Open();
+                     int rowsAffected = cmdUpdateGiftQuantity.ExecuteNonQuery();
+                     conn.Close();
+
+                     if (rowsAffected > 0)
+                     {
+                         // Insert the order into OrdersCart table
+                         SqlCommand cmdAddOrder = new SqlCommand("addOrdersCart", conn);
+                         cmdAddOrder.CommandType = CommandType.StoredProcedure;
+                         cmdAddOrder.Parameters.AddWithValue("@orderName", order.orderName);
+                         cmdAddOrder.Parameters.AddWithValue("@orderDescription", order.orderDescription);
+                         cmdAddOrder.Parameters.AddWithValue("@ThemeModel", GetThemeModelXml(order.themeModel));
+                         cmdAddOrder.Parameters.AddWithValue("@GiftId", order.giftModel.giftId);
+                         cmdAddOrder.Parameters.AddWithValue("@orderDate", order.orderDate);
+                         cmdAddOrder.Parameters.AddWithValue("@orderPrice", order.orderPrice);
+                         cmdAddOrder.Parameters.AddWithValue("@orderAddress", order.orderAddress);
+                         cmdAddOrder.Parameters.AddWithValue("@orderPhone", order.orderPhone);
+                         cmdAddOrder.Parameters.AddWithValue("@orderEmail", order.orderEmail);
+                         cmdAddOrder.Parameters.AddWithValue("@orderQuantity", order.orderQuantity);
+                         conn.Open();
+                         int rowEffect = cmdAddOrder.ExecuteNonQuery();
+                         conn.Close();
+
+                         if (rowEffect > 0)
+                         {
+                             return "Order added";
+                         }
+                         else
+                         {
+                             return "Order not added";
+                         }
+                     }
+                     else
+                     {
+                         return "Order not added";
+                     }
+                 }
+                 else
+                 {
+                     return "Insufficient gift quantity";
+                 }
+             }
+             catch (Exception ex)
+             {
+                 return ex.Message;
+             }
+         }
             
-            try{
+           /* try{
                 SqlCommand cmd = new SqlCommand("addOrdersCart", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@orderName", order.orderName);
@@ -862,7 +923,7 @@ namespace dotnetapp
             }
            
 
-        }
+        }*/
         
         public string addOrders(string userEmail)
         {
@@ -909,8 +970,8 @@ namespace dotnetapp
         {
 
                 DataTable dt = new DataTable();
-                SqlCommand cmd = new SqlCommand("getOrdersCart", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("SELECT orderID, orderName, orderDescription, ThemeModel, GiftModel.giftName, GiftModel.giftPrice ,orderDate, orderPrice, orderAddress, orderPhone, orderEmail, orderQuantity FROM OrdersCart JOIN GiftModel ON OrdersCart.GiftId = GiftModel.giftId WHERE orderEmail = @userEmail;", conn);
+                cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@userEmail", userEmail);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -942,7 +1003,7 @@ namespace dotnetapp
                 cmd.Parameters.AddWithValue("@orderName", order.orderName);
                 cmd.Parameters.AddWithValue("@orderDescription", order.orderDescription);
                 cmd.Parameters.AddWithValue("@themeModel", GetThemeModelXml(order.themeModel));
-               
+               //cmd.Parameters.AddWithValue("@orderPrice",order.orderPrice);
                 cmd.Parameters.AddWithValue("@orderDate", order.orderDate);
               
                 cmd.Parameters.AddWithValue("@orderAddress", order.orderAddress);
@@ -968,8 +1029,49 @@ namespace dotnetapp
         }
        
         public string deleteOrder(int orderID)
-        {
-            try
+        { try
+            {
+                SqlCommand cmdCheckOrderQuantity = new SqlCommand("SELECT orderQuantity FROM OrdersCart WHERE orderID = @orderID", conn);
+                cmdCheckOrderQuantity.Parameters.AddWithValue("@orderID", orderID);
+                conn.Open();
+                string availableQuantity = (string)cmdCheckOrderQuantity.ExecuteScalar();
+                conn.Close();
+                SqlCommand cmdCheckGiftId = new SqlCommand("SELECT GiftId FROM OrdersCart WHERE orderID = @orderID", conn);
+                cmdCheckGiftId.Parameters.AddWithValue("@orderID", orderID);
+                conn.Open();
+                int gi = (int)cmdCheckGiftId.ExecuteScalar();
+                conn.Close();
+                SqlCommand cmdUpdateGift  = new SqlCommand("UPDATE GiftModel SET giftQuantity = giftQuantity + @orderQuantity WHERE giftId = @GIftId", conn);
+                cmdUpdateGift.Parameters.AddWithValue("@GiftId", gi);
+                cmdUpdateGift.Parameters.AddWithValue("@orderQuantity",Convert.ToInt32(availableQuantity));
+                conn.Open();
+                int rowsAffected = cmdUpdateGift.ExecuteNonQuery();
+                conn.Close();
+                
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "DeleteOrdersCartbyId";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@orderID", orderID);
+                    conn.Open();
+                    int rowaffect = cmd.ExecuteNonQuery();
+                    conn.Close();
+                    if (rowaffect > 0)
+                    {
+                        return "order deleted";
+                    }
+                    else
+                    {
+                        return "order not deleted";
+                    }
+                }
+                 
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+            /*try
             {
 
                 SqlCommand cmd = new SqlCommand();
@@ -993,7 +1095,7 @@ namespace dotnetapp
             {
                 return ex.Message;
             }
-        }
+        }*/
         
         public JsonResult  viewOrder()
         {
@@ -1048,8 +1150,8 @@ namespace dotnetapp
         public JsonResult  MyOrders(string email)
         {            
                 DataTable dt = new DataTable();
-                SqlCommand cmd = new SqlCommand("UserViewOrders", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("SELECT orderID, orderName, orderDescription, ThemeModel, GiftModel.giftName, GiftModel.giftPrice ,orderDate, orderPrice, orderAddress, orderPhone, orderEmail, orderQuantity FROM Orders JOIN GiftModel ON Orders.GiftId = GiftModel.giftId WHERE orderEmail = @email;", conn);
+                cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@email", email);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
