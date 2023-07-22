@@ -92,7 +92,7 @@ const toggleConfirmPasswordVisibility = () => {
           userrole : userRole,
       }
         
-        const url = "https://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addUser";
+        const url = "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addUser";
         axios.post(url,data).then((result)=>{
           console.log(result.data);
           if(result.data==="user exists"){

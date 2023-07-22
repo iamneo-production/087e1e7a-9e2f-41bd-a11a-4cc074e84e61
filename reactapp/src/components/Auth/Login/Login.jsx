@@ -24,8 +24,9 @@ const Login=(props)=>{
                 localStorage.setItem("email",email);
                 localStorage.setItem("isAuth" ,true);
                 localStorage.setItem("role" ,"User");
-                toast.success("Login Successful");
                 navigate('/Homepage');
+                //toast.success("Login success!");
+                showCustomSuccessMessage();
               }
               else{
                 axios.post("https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/login", data)
@@ -35,6 +36,8 @@ const Login=(props)=>{
                         localStorage.setItem("isAuth" ,true);
                         localStorage.setItem("role" ,"Admin");
                         navigate('/admingifts');
+                        showCustomSuccessMessage("Admin");
+                        
                     }
                     else 
                     {  if (result1.data === "invalid_email" ||result.data === "invalid_email") {
@@ -42,7 +45,7 @@ const Login=(props)=>{
                     } else if (result1.data === "invalid_password"||result.data === "invalid_password") {
                       toast.warning("Invalid password");
                     } 
-                       else {
+                      else {
                       toast.warning("Invalid Email or Password");
                     }
                     }
@@ -50,6 +53,14 @@ const Login=(props)=>{
               }
         }).catch((error) => {toast.warning(error)});  
     }; 
+    const showCustomSuccessMessage = (role) => {
+      const messages = {
+        User: "Happy login! You are now logged in as a user.",
+        Admin: "Welcome back! You are now logged in as an admin.",
+      };
+      const message = role ? messages[role] : "Happy login!";
+      toast.success(message);
+    };
         
          
 
@@ -57,11 +68,7 @@ const Login=(props)=>{
       <div className="Login">
         <ToastContainer/>
           <Row className="justify-content-center align-items-center" style={{ height: '100%',width:'100%' }}>
-          {/*Col xs={12} md={8} lg={4} ><div className="loginImg">
-            <img src='' 
-             alt="LoginImage" height={'500px'} /></div>
-          </Col>
-    <Col xs={1}  ></Col>*/}
+          
         <Col xs={12} md={8} lg={4} >
           <div className="loginForm">
             <Form onSubmit={handleSubmit} >
