@@ -10,7 +10,7 @@ const EditOrder=(props)=>{
   const [themes,setThemes] = useState([]);
   useEffect(() => {
   //Get themes Api
-  axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
+  axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
     .then(response => {
       setThemes(response.data);
     })
@@ -21,14 +21,21 @@ const EditOrder=(props)=>{
 const [show, setShow] = useState(false);
 const handleClose = () => setShow(false);
 const handleShow = () => setShow(true);
-
-const[Name,setName]=useState('');
-const[orderDate,setDate]=useState('');
-const[Adress,setAddress]=useState('');
-const[PhoneNo,setPhone]=useState('');
-const[Descripation,setDescripation]=useState('');
+const getOrderDate = () => {
+  const today = new Date();
+  
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+const[Name,setName]=useState(order.orderName);
+const[orderDate,setDate]=useState(getOrderDate());
+const[Adress,setAddress]=useState(order.orderAddress);
+const[PhoneNo,setPhone]=useState(order.orderPhone);
+const[Descripation,setDescripation]=useState(order.orderDescription);
 const giftModel= (order.GiftId);
-const [Quantity,setOrderQuantity]=useState('');
+const [Quantity,setOrderQuantity]=useState(order.orderQuantity);
 const [themePrice,SetThemePrice]=useState(0);
 const Price= (order.giftPrice + themePrice)*Quantity;
 const [themeModel,setThemeModel]=useState([])
@@ -48,7 +55,7 @@ const handleSubmit=(e)=>{
           orderQuantity:Quantity
       }
       console.log(order)
-      axios.put('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
+      axios.put('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
         console.log(result.data);
         if(result.data === "order updated"){
           props.onOrderEdited();
@@ -85,66 +92,74 @@ const handleSubmit=(e)=>{
             <h1>Edit Order</h1>
         </Modal.Header>
         <Modal.Body>
-        <Form className='placeorderform'   >
-        
-          <div>
-        <Form.Group className="mb-3" >
-        <Form.Control type="text" placeholder="Enter Name" id="enterName" onChange={(e)=>setName(e.target.value)} required />
-        
-       </Form.Group>
-      <Form.Group className="mb-3">
-      <Form.Control type="date" placeholder="Enter Date"  id="enterDate" onChange={(e)=>setDate(e.target.value)} required/>
-      
-      </Form.Group>  
-      <Form.Group className="mb-3" >
-      <Form.Control type="text" placeholder="Enter Address" id="enterAddress" onChange={(e)=>setAddress(e.target.value)} required/>
-      
-      </Form.Group>
-      <Form.Group className="mb-3" >
-      <Form.Control type="text" placeholder="Enter Phone Number" id="enterPhoneNo" onChange={(e)=>setPhone(e.target.value)} required/>
-     
-      </Form.Group>
-      <Form.Group className="mb-3" >
-      <Form.Control type="email" value={localStorage.getItem("email")}  id="enterEmailId"/>
-      
-      </Form.Group>
-      </div>
-      <div>
-      <Form.Group className="mb-3" >
-      <Form.Control type="text" defaultValue={order.giftPrice} id="orderPrice"/>
-     
-      </Form.Group>
-      <Form.Group className="mb-3" >
-      <Form.Control type="text" defaultValue={order.giftName} id="giftModel"/>
-     
-      </Form.Group>
-      <Form.Group className="mb-3">
-      <Form.Control type="text" placeholder="Enter Description" id="enterDescripation" onChange={(e)=>setDescripation(e.target.value)}/>
-     
-      </Form.Group>
-      <Form.Group className="mb-3" >
-      <Form.Control type="number" placeholder="Enter Quantiy" id="quantity" onChange={(e)=>{setOrderQuantity(e.target.value)}} />
-      </Form.Group>
+        <Form className='placeorderform'>
+  <div>
+    <Form.Group className="mb-3">
+      <Form.Label>Name</Form.Label>
+      <Form.Control type="text" value={Name} id="enterName" onChange={(e) => setName(e.target.value)} required />
+    </Form.Group>
 
-  <Dropdown className="d-inline" align="end">
-  <DropdownButton variant='outline-secondary' id='selectThemeModel' title="Select the Theme">
-  {
-    themes.map((theme) => (
-    <Form.Check
-      key={theme.themeId}
-      type="checkbox"
-      id={theme.themeId}
-      label={theme.themeName +" - "+ theme.themePrice} 
-      value={theme.themeName}
-       checked={selectedThemes.includes(theme.themeName)}
-      onChange={handleThemeSelect}
-    />
-  ))}
-</DropdownButton>
-</Dropdown>
-      </div>      
-      <Button id='updateOrder' onClick={handleSubmit} >Update Order</Button>
-      </Form>
+    <Form.Group className="mb-3">
+      <Form.Label>Order Date</Form.Label>
+      <Form.Control value={orderDate} id="enterDate" />
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Address</Form.Label>
+      <Form.Control type="text" value={Adress} id="enterAddress" onChange={(e) => setAddress(e.target.value)} required />
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Phone Number</Form.Label>
+      <Form.Control type="text" value={PhoneNo} id="enterPhoneNo" onChange={(e) => setPhone(e.target.value)} required />
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Email</Form.Label>
+      <Form.Control type="email" value={localStorage.getItem("email")} id="enterEmailId" />
+    </Form.Group>
+  </div>
+
+  <div>
+    <Form.Group className="mb-3">
+      <Form.Label>Order Price</Form.Label>
+      <Form.Control type="text" defaultValue={order.giftPrice} id="orderPrice" disabled/>
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Gift Model</Form.Label>
+      <Form.Control type="text" defaultValue={order.giftName} id="giftModel" disabled/>
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Description</Form.Label>
+      <Form.Control type="text" value={Descripation} id="enterDescripation" onChange={(e) => setDescripation(e.target.value)} />
+    </Form.Group>
+
+    <Form.Group className="mb-3">
+      <Form.Label>Quantity</Form.Label>
+      <Form.Control type="number" value={Quantity} id="quantity" onChange={(e) => { setOrderQuantity(e.target.value) }} />
+    </Form.Group>
+
+    <Dropdown className="d-inline" align="end">
+      <DropdownButton variant='outline-secondary' id='selectThemeModel' title="Select the Theme">
+        {themes.map((theme) => (
+          <Form.Check
+            key={theme.themeId}
+            type="checkbox"
+            id={theme.themeId}
+            label={theme.themeName + " - " + theme.themePrice}
+            value={theme.themeName}
+            checked={selectedThemes.includes(theme.themeName)}
+            onChange={handleThemeSelect}
+          />
+        ))}
+      </DropdownButton>
+    </Dropdown>
+  </div>
+  <Button id='updateOrder' onClick={handleSubmit}>Update Order</Button>
+</Form>
+
         </Modal.Body>
       </Modal>
 

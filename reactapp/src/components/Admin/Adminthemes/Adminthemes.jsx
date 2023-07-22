@@ -15,7 +15,7 @@ function AdminThemes(){
     const [effect,setEffect] = useState('');
     useEffect(() => {
     //Get themes Api
-    axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
+    axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
       .then(response => {
         setThemes(response.data);
       
@@ -41,7 +41,7 @@ function AdminThemes(){
                  <li>Theme Price : {themes.themePrice}</li>
                  <li>Theme Description :{themes.themeDetails}</li>
                  <div className="editdelete">
-                 <span   id={"editTheme"+(index+1)}><Editthemes themeid={themes.themeId} onThemeEdited={() => setEffect(Date.now())} /></span>
+                 <span   id={"editTheme"+(index+1)}><Editthemes themeData={themes} onThemeEdited={() => setEffect(Date.now())} /></span>
                  <span   id={"deleteTheme"+(index+1)}> <Deletetheme themeid={themes.themeId} onThemeDeleted={() => setEffect(Date.now())}/> </span>
                  </div>
                  </Card.Body>
