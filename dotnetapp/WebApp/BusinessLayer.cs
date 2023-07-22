@@ -12,12 +12,12 @@ namespace WebApp
        private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
 
         // AuthController
-        public bool isUserPresent(LoginModel lm)
+        public string isUserPresent(LoginModel lm)
         {
             return _dataAccessLayer.isUserPresent(lm);
         }
 
-        public bool isAdminPresent(LoginModel lm)
+        public string isAdminPresent(LoginModel lm)
         {
             return _dataAccessLayer.isAdminPresent(lm);
         }
