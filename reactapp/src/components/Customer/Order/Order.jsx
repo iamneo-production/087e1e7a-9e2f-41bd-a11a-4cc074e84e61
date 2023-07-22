@@ -11,7 +11,7 @@ const Order=()=>{
     const email = localStorage.getItem("email");
     const navigate = useNavigate();
     useEffect(()=>{
-        axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getallorders', {
+        axios.get('https://8080-ecdbffcdccababadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getallorders', {
             params: {
               userEmail: email
             }

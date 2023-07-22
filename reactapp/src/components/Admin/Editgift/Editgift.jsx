@@ -85,7 +85,7 @@ const Editgift = (props) => {
         giftQuantity: EditedGiftQuantity,
       };
     
-      axios.put('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/editGift/' + gift.giftId, data)
+      axios.put('https://8080-ecdbffcdccababadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/editGift/' + gift.giftId, data)
         .then(response => {
           if (response.data === "Gift edited") {
             toast.success("Gift Edited");

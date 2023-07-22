@@ -58,7 +58,7 @@ const Editthemes = (props) => {
       themedetails: EditedThemedescription,
     };
   
-    axios.put('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/editTheme/' + theme.themeId, data)
+    axios.put('https://8080-ecdbffcdccababadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/editTheme/' + theme.themeId, data)
       .then(response => {
         if (response.data === "Theme edited") {
           toast.success("Theme Edited");

@@ -18,7 +18,7 @@ const Login=(props)=>{
       const handleSubmit = (e) => {
         e.preventDefault();
         const data = { email : email,password : password }
-        axios.post("https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login", data)
+        axios.post("https://8080-ecdbffcdccababadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login", data)
         .then((result) => {
               if(result.data === "valid"){
                 localStorage.setItem("email",email);
@@ -29,7 +29,7 @@ const Login=(props)=>{
                 showCustomSuccessMessage();
               }
               else{
-                axios.post("https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/login", data)
+                axios.post("https://8080-ecdbffcdccababadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/login", data)
                 .then((result1) => {
                       if(result1.data === "valid"){
 
