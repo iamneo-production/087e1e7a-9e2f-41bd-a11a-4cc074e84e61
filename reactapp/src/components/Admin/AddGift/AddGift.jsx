@@ -1,147 +1,168 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
 import axios from "axios";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Form, Button } from "react-bootstrap";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const Addtheme = (props) => {
-  const [ThemeName, setThemeName] = useState("");
-  const [ThemePrice, setThemePrice] = useState("");
-  const [ThemeDescription, setThemeDescription] = useState("");
-  const [error, setError] = useState({
-    themeNameError: "",
-    themePriceError: "",
-    themeDescriptionError: "",
-  });
+const AddGift = (props) => {
+  const [GiftImage, setGiftImage] = useState('');
+  const [GiftName, setGiftName] = useState('');
+  const [GiftPrice, setGiftPrice] = useState('');
+  const [GiftQuantity, setGiftQuantity] = useState('');
+  const [GiftDetails, setGiftDetails] = useState('');
+  const [errors, setErrors] = useState({});
 
-  const handleThemeName = (e) => {
-    setThemeName(e.target.value);
-    setError((prevError) => ({
-      ...prevError,
-      themeNameError: "", // Clear the error when the user starts typing
-    }));
+  const handleGiftName = (e) => {
+    setGiftName(e.target.value);
+    setErrors({ ...errors, giftName: '' }); // Clear error when input changes
   };
 
-  const handleThemePrice = (e) => {
-    setThemePrice(e.target.value);
-    setError((prevError) => ({
-      ...prevError,
-      themePriceError: "", // Clear the error when the user starts typing
-    }));
+  const handleGiftImage = (e) => {
+    setGiftImage(e.target.value);
+    setErrors({ ...errors, giftImage: '' }); // Clear error when input changes
   };
 
-  const handleThemeDescription = (e) => {
-    setThemeDescription(e.target.value);
-    setError((prevError) => ({
-      ...prevError,
-      themeDescriptionError: "", // Clear the error when the user starts typing
-    }));
+  const handleGiftPrice = (e) => {
+    setGiftPrice(e.target.value);
+    setErrors({ ...errors, giftPrice: '' }); // Clear error when input changes
   };
 
-  const handleAddTheme = (e) => {
-    e.preventDefault();
-    setError({
-      themeNameError: "",
-      themePriceError: "",
-      themeDescriptionError: "",
-    });
+  const handleGiftQuantity = (e) => {
+    setGiftQuantity(e.target.value);
+    setErrors({ ...errors, giftQuantity: '' }); // Clear error when input changes
+  };
 
-    let isValid = true;
-    if (ThemeName.trim() === "") {
-      setError((prevError) => ({
-        ...prevError,
-        themeNameError: "Theme Name cannot be empty",
-      }));
-      isValid = false;
-    }
-    if (ThemePrice.trim() === "") {
-      setError((prevError) => ({
-        ...prevError,
-        themePriceError: "Theme Price cannot be empty",
-      }));
-      isValid = false;
-    }
-    if (ThemeDescription.trim() === "") {
-      setError((prevError) => ({
-        ...prevError,
-        themeDescriptionError: "Theme Description cannot be empty",
-      }));
-      isValid = false;
+  const handleGiftDetails = (e) => {
+    setGiftDetails(e.target.value);
+    setErrors({ ...errors, giftDetails: '' }); // Clear error when input changes
+  };
+
+  const handleAddGift = (event) => {
+    event.preventDefault();
+    const giftData = {
+      giftName: GiftName,
+      giftImageUrl: GiftImage,
+      giftPrice: GiftPrice,
+      giftDetails: GiftDetails,
+      giftQuantity: GiftQuantity
+    };
+
+    const formErrors = {};
+    let hasErrors = false;
+
+    if (giftData.giftName.trim() === '') {
+      formErrors.giftName = 'Gift name is required';
+      hasErrors = true;
     }
 
-    if (isValid) {
-      const themeData = {
-        themename: ThemeName,
-        themeprice: ThemePrice,
-        themedetails: ThemeDescription,
-      };
+    if (giftData.giftImageUrl.trim() === '') {
+      formErrors.giftImage = 'Gift image URL is required';
+      hasErrors = true;
+    }
 
-      const url =
-        "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
-      axios
-        .post(url, themeData)
+    if (giftData.giftPrice.trim() === '') {
+      formErrors.giftPrice = 'Gift price is required';
+      hasErrors = true;
+    }
+
+    if (giftData.giftQuantity.trim() === '') {
+      formErrors.giftQuantity = 'Gift quantity is required';
+      hasErrors = true;
+    }
+
+    if (giftData.giftDetails.trim() === '') {
+      formErrors.giftDetails = 'Gift details are required';
+      hasErrors = true;
+    }
+
+    setErrors(formErrors);
+
+    if (!hasErrors) {
+      const url = "https://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addGift";
+      axios.post(url, giftData)
         .then((result) => {
-          console.log(result.data);
-          if (result.data === "Theme Added") {
-            props.onThemeAdded();
-            toast.success("Theme Added");
-            setThemeName(""); // Clear the ThemeName field
-            setThemePrice(""); // Clear the ThemePrice field
-            setThemeDescription(""); // Clear the ThemeDescription field
+          if (result.data === "Gift added") {
+            toast.success("Gift Added");
+            props.onGiftAdded();
+            setGiftImage('');
+            setGiftName('');
+            setGiftPrice('');
+            setGiftQuantity('');
+            setGiftDetails('');
           }
         })
         .catch((error) => {
-          toast.warning("Theme Not Added");
+          toast.warning("Gift Not Added");
         });
     }
   };
 
   return (
-    <Form onSubmit={handleAddTheme}>
+    <Form>
       <Form.Text className="text-muted">
-        <h1>Add Theme</h1>
+        <h1>Add Gift</h1>
       </Form.Text>
-      <label>Theme Name:</label>
-
+      <label>Gift Name:</label>
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Enter the theme name"
-          id="enterThemeName"
-          onChange={handleThemeName}
-          value={ThemeName} // Bind value to state
+          placeholder="Enter the gift name"
+          data-testid="giftName"
+          id="giftName"
+          value={GiftName}
+          onChange={handleGiftName}
         />
-        <span style={{ color: "red" }}>{error.themeNameError}</span>
+        {errors.giftName && <span className="error-message">{errors.giftName}</span>}
       </Form.Group>
-      <label>Theme Price:</label>
-
-      <Form.Group className="mb-3">
-        <Form.Control
-          type="number"
-          placeholder="Enter the theme price"
-          id="enterThemePrice"
-          onChange={handleThemePrice}
-          value={ThemePrice} // Bind value to state
-        />
-        <span style={{ color: "red" }}>{error.themePriceError}</span>
-      </Form.Group>
-      <label>Theme Description:</label>
-
+      <label>Gift Price:</label>
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
-          placeholder="Enter the theme description"
-          id="enterThemeDescription"
-          onChange={handleThemeDescription}
-          value={ThemeDescription} // Bind value to state
+          placeholder="Enter the gift price"
+          data-testid="giftPrice"
+          value={GiftPrice}
+          onChange={handleGiftPrice}
         />
-        <span style={{ color: "red" }}>{error.themeDescriptionError}</span>
+        {errors.giftPrice && <span className="error-message">{errors.giftPrice}</span>}
       </Form.Group>
-      <Button variant="primary" type="submit" id="add">
-        Add Theme
+      <label>Gift Image:</label>
+      <Form.Group className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Enter the gift image URL"
+          data-testid="imageUrl"
+          value={GiftImage}
+          onChange={handleGiftImage}
+        />
+        {errors.giftImage && <span className="error-message">{errors.giftImage}</span>}
+      </Form.Group>
+      <label>Gift Quantity:</label>
+      <Form.Group className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Enter the product quantity"
+          id="enterGiftQuantity"
+          value={GiftQuantity}
+          onChange={handleGiftQuantity}
+        />
+        {errors.giftQuantity && <span className="error-message">{errors.giftQuantity}</span>}
+      </Form.Group>
+      <label>Gift Details:</label>
+      <Form.Group className="mb-3">
+        <Form.Control
+          type="text"
+          placeholder="Enter the gift Details"
+          id="enterGiftDetails"
+          value={GiftDetails}
+          onChange={handleGiftDetails}
+        />
+        {errors.giftDetails && <span className="error-message">{errors.giftDetails}</span>}
+      </Form.Group>
+      <Button type="submit" id="addGiftButton" onClick={handleAddGift}>
+        ADD
       </Button>
     </Form>
   );
 };
 
-export default Addtheme;
+export default AddGift;

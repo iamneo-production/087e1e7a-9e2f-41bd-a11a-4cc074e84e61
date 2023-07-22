@@ -76,8 +76,7 @@ const Addtheme = (props) => {
         themedetails: ThemeDescription,
       };
 
-      const url =
-        "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
+      const url = "https://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
       axios
         .post(url, themeData)
         .then((result) => {
