@@ -83,6 +83,9 @@ const handleSubmit=(e)=>{
         navigate('/Cart');
         toast.success("Order Placed")
       }
+      else if(result.data==="Insufficient gift quantity"){
+        toast.warning("This item is currently out of stock")
+      }
     }).catch((error)=>{
       console.log("All fields are required");
     })
