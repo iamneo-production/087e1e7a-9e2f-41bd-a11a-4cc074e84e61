@@ -1140,7 +1140,7 @@ namespace dotnetapp
         public string Postreview(ReviewModel review)
         {
             try{
-            SqlCommand cmd = new SqlCommand("Insertreview", conn);
+            SqlCommand cmd = new SqlCommand("InsertReview", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@orderId", review.orderId);
             cmd.Parameters.AddWithValue("@name", review.name);

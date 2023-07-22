@@ -83,7 +83,7 @@ const MyProfile = () => {
     axios
       .post('https://8080-affdbaabdcabfabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login', data)
       .then((result) => {
-        if (result.data === true) {
+        if (result.data === "valid") {
           if (newPassword === confirmPassword) {
             updatePassword();
           } else {
