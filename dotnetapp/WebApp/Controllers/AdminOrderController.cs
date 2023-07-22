@@ -11,7 +11,7 @@ using System.Data;
 using System.Xml.Linq;
 namespace WebApp.Controllers
 {
-     
+    [Route("[controller]")]
     [ApiController]
     public class AdminOrderController : ControllerBase
     {

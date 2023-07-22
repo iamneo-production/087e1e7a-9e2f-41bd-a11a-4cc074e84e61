@@ -6,18 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebApp
 {
-   public class BusinessLayer
+    public class BusinessLayer
     {
         
-       private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
+       
+  private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
 
         // AuthController
-        public bool isUserPresent(LoginModel lm)
+        public string isUserPresent(LoginModel lm)
         {
             return _dataAccessLayer.isUserPresent(lm);
         }
 
-        public bool isAdminPresent(LoginModel lm)
+        public string isAdminPresent(LoginModel lm)
         {
             return _dataAccessLayer.isAdminPresent(lm);
         }
@@ -133,57 +134,47 @@ namespace WebApp
             return _dataAccessLayer.addOrdersCart(order);
         }
 
-
+        
         public string addOrders(string userEmail)
         {
-
-            return _dataAccessLayer.addOrders(userEmail);
+           
+              return  _dataAccessLayer.addOrders(userEmail);
         }
-
+    
 
 
         public IActionResult viewPlacedOrders(string userEmail)
         {
 
-            return _dataAccessLayer.viewPlacedOrders(userEmail);
+           return _dataAccessLayer.viewPlacedOrders(userEmail);
         }
-
-        public List<OrderModel> viewOrders(string userEmail)
-        {
-            return _dataAccessLayer.viewOrders(userEmail);
-        }
-
-
-        public OrderModel viewPlacedOrderBYEmail(int orderId)
-        {
-            return _dataAccessLayer.viewPlacedOrderBYEmail(orderId);
-        }
-
-
+       
+       
+       
         public string editOrder(int orderID, OrderModel or)
         {
-            return _dataAccessLayer.editOrder(orderID, or);
-
+          return _dataAccessLayer.editOrder(orderID,or);
+           
         }
-
+       
         public string deleteOrder(int orderID)
         {
-            return _dataAccessLayer.deleteOrder(orderID);
+           return _dataAccessLayer.deleteOrder(orderID);
         }
-
+        
         public IActionResult viewOrder()
         {
 
-            return _dataAccessLayer.viewOrder();
+           return _dataAccessLayer.viewOrder();
         }
 
-        public IActionResult MyOrders(string email)
+         public IActionResult MyOrders(string email)
         {
 
-            return _dataAccessLayer.MyOrders(email);
+           return _dataAccessLayer.MyOrders(email);
         }
 
-        public string AdminDeleteOrder(int orderID)
+        public string AdminDeleteOrder( int orderID)
         {
             return _dataAccessLayer.AdminDeleteOrder(orderID);
         }
@@ -198,6 +189,5 @@ namespace WebApp
         {
             return _dataAccessLayer.Postreview(review);
         }
-    }     
-        
+    }
 }

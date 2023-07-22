@@ -11,7 +11,7 @@ using System.Data;
 namespace WebApp.Controllers
 {
     [ApiController]
-    
+    [Route("[controller]")]
 
     public class ReviewController : ControllerBase
     {

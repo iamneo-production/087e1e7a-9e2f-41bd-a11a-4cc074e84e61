@@ -11,11 +11,12 @@ using System.Data;
 namespace WebApp.Controllers
 {
     [ApiController]
-    
+    [Route("[controller]")]
+
     public class UserController : ControllerBase
-    {   
-        
-       
+    {
+
+
         private readonly BusinessLayer bal = new BusinessLayer();
 
         [HttpPost]
@@ -44,31 +45,7 @@ namespace WebApp.Controllers
         public List<UserModel> getUser()
         {
             return getUser();
-        }
-        [HttpGet]
-        [Route("user/getuserbyemail")]
-        public UserModel getUserByEmail(string email)
-        {
-            return bal.getUserByEmail(email);
-        }
-        [HttpPut]
-        [Route("user/updatepassword")]
-        public string UpdatePassword(LoginModel login)
-        {
-            return bal.UpdatePassword(login);
-        }
-        [HttpPut]
-        [Route("user/updatemobilenumber")]
-        public string updateMobileNumber(UserModel user)
-        {
-            return bal.updateMobileNumber(user);
-        }
-        [HttpPut]
-        [Route("user/updateusername")]
-        public string updateusername(UserModel user)
-        {
-            return bal.updateusername(user);
-        }
 
+        }
     }
 }
