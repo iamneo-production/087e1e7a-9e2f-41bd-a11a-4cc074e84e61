@@ -46,11 +46,7 @@ const Addgift = (props)=>{
             toast.warning("Gift Not Added");
           })
         }
-          setgiftName("");
-          setgiftImage("");
-          setgiftPrice("");
-          setgiftQuantity("");
-          setgiftDetails("");
+          
 
       }
     return(

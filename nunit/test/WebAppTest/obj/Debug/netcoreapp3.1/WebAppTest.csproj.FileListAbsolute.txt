@@ -1,0 +1,5 @@
+/home/coder/project/workspace/nunit/test/WebAppTest/obj/Debug/netcoreapp3.1/WebAppTest.csproj.AssemblyReference.cache
+/home/coder/project/workspace/nunit/test/WebAppTest/obj/Debug/netcoreapp3.1/WebAppTest.GeneratedMSBuildEditorConfig.editorconfig
+/home/coder/project/workspace/nunit/test/WebAppTest/obj/Debug/netcoreapp3.1/WebAppTest.AssemblyInfoInputs.cache
+/home/coder/project/workspace/nunit/test/WebAppTest/obj/Debug/netcoreapp3.1/WebAppTest.AssemblyInfo.cs
+/home/coder/project/workspace/nunit/test/WebAppTest/obj/Debug/netcoreapp3.1/WebAppTest.csproj.CoreCompileInputs.cache
