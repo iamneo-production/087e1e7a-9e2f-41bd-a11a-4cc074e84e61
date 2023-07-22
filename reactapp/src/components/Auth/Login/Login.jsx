@@ -1,11 +1,12 @@
 import React,{ useState} from "react";
-import {Button,Row,Col, Form} from "react-bootstrap";
+import {Button,Row,Col, Form,InputGroup } from "react-bootstrap";
 import './Login.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { RiLockPasswordFill } from 'react-icons/ri';
+import { FiMail } from 'react-icons/fi';
 
 
 
@@ -17,30 +18,49 @@ const Login=(props)=>{
       const handleSubmit = (e) => {
         e.preventDefault();
         const data = { email : email,password : password }
-        axios.post("https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login", data)
+        axios.post("https://8080-ecaebdccabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/login", data)
         .then((result) => {
-              if(result.data === true){
+              if(result.data === "valid"){
                 localStorage.setItem("email",email);
                 localStorage.setItem("isAuth" ,true);
                 localStorage.setItem("role" ,"User");
                 navigate('/Homepage');
-              }else {
-                axios.post("https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/login", data)
-                .then((result) => {
-                      if(result.data === true){
+                //toast.success("Login success!");
+                showCustomSuccessMessage();
+              }
+              else{
+                axios.post("https://8080-ecaebdccabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/login", data)
+                .then((result1) => {
+                      if(result1.data === "valid"){
 
                         localStorage.setItem("isAuth" ,true);
                         localStorage.setItem("role" ,"Admin");
                         navigate('/admingifts');
+                        showCustomSuccessMessage("Admin");
+                        
                     }
-                    else
-                    {
+                    else 
+                    {  if (result1.data === "invalid_email" ||result.data === "invalid_email") {
+                      toast.warning("Invalid email");
+                    } else if (result1.data === "invalid_password"||result.data === "invalid_password") {
+                      toast.warning("Invalid password");
+                    } 
+                      else {
                       toast.warning("Invalid Email or Password");
+                    }
                     }
                 }).catch((error) => {toast.warning(error)});
               }
         }).catch((error) => {toast.warning(error)});  
     }; 
+    const showCustomSuccessMessage = (role) => {
+      const messages = {
+        User: "Happy login! You are now logged in as a user.",
+        Admin: "Welcome back! You are now logged in as an admin.",
+      };
+      const message = role ? messages[role] : "Happy login!";
+      toast.success(message);
+    };
         
          
 
@@ -48,11 +68,7 @@ const Login=(props)=>{
       <div className="Login">
         <ToastContainer/>
           <Row className="justify-content-center align-items-center" style={{ height: '100%',width:'100%' }}>
-          {/*Col xs={12} md={8} lg={4} ><div className="loginImg">
-            <img src='' 
-             alt="LoginImage" height={'500px'} /></div>
-          </Col>
-    <Col xs={1}  ></Col>*/}
+          
         <Col xs={12} md={8} lg={4} >
           <div className="loginForm">
             <Form onSubmit={handleSubmit} >
@@ -62,11 +78,18 @@ const Login=(props)=>{
             </Form.Group>
       <Form.Group className="mb-3">
         <Form.Label>Email address:</Form.Label>
-        <Form.Control type="email" data-testid="email" id="email" placeholder=" Enter email"   onChange={(e) => setEmail(e.target.value)} />
+        <InputGroup>
+      <InputGroup.Text> <FiMail /> </InputGroup.Text>
+        <Form.Control type="text" data-testid="email" id="email" placeholder=" Enter email"   onChange={(e) => setEmail(e.target.value)} />
+        </InputGroup>
       </Form.Group>
 
       <Form.Group className="mb-3">
         <Form.Label>Password:</Form.Label>
+        <InputGroup>
+    <InputGroup.Text>
+      <RiLockPasswordFill />
+    </InputGroup.Text>
         <Form.Control
             type={showPassword ? 'text' : 'password'}
             data-testid="password"
@@ -75,6 +98,7 @@ const Login=(props)=>{
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+        </InputGroup>
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Check

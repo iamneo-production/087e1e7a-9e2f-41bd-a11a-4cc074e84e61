@@ -10,7 +10,7 @@ const Deletetheme = (props) =>{
     
     const handleDelete=(id)=>{
         //Delete Theme Api
-        axios.delete('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/deleteTheme/'+id)
+        axios.delete('https://8080-ecaebdccabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/deleteTheme/'+id)
           .then(response => {
             if(response.data==="Theme deleted"){
             props.onThemeDeleted();

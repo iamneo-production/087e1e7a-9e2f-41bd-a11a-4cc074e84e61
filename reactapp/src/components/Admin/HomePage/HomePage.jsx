@@ -17,7 +17,7 @@ const HomePage=()=>{
     
     useEffect(() => {
       //Get themes Api
-    axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getGift')
+    axios.get('https://8080-ecaebdccabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getGift')
       .then(response => {
       setGifts(response.data);
      
@@ -56,7 +56,7 @@ const HomePage=()=>{
                       <td>{gift.giftQuantity}</td>
                       <td>
                         
-                      <span id={"editGift"+(index+1)}><Editgift giftid={gift.giftId} onGiftEdited={() => setEffect(Date.now())}/></span>
+                      <span id={"editGift"+(index+1)}><Editgift giftData={gift} onGiftEdited={() => setEffect(Date.now())}/></span>
                       <span id={"deleteGift"+(index+1)}><Deletegift giftid={gift.giftId} onGiftDeleted={() => setEffect(Date.now())}/></span>
                         
                         </td>
