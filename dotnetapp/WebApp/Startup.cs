@@ -48,7 +48,7 @@ namespace WebApp
 
             app.UseRouting();
 
-            app.UseCors(options => options.WithOrigins("https://8081-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(options => options.WithOrigins("https://8081-dafbecdaebfdaaaabadfbbdfdacbcfcecaabcfba.project.examly.io/").AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             app.UseAuthorization();
 
