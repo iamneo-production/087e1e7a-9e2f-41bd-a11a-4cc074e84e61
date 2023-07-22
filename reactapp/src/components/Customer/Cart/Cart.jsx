@@ -65,6 +65,7 @@ const Myorders=()=> {
             <th data-testid="giftPrice">Price</th>
             <th data-testid="quantity">Quantity</th>
             <th data-testid="totalPrice">Total Price</th>
+            <th>Order Date</th>
             <th></th>
           </tr>
         </thead>
@@ -76,6 +77,7 @@ const Myorders=()=> {
               <td>{order.giftPrice}</td>
               <td>{order.orderQuantity}</td>
               <td>{order.orderPrice}</td> 
+              <td>{order.orderDate}</td>
               <td>
                <span ><EditOrder orderData = {order} onOrderEdited={() => setEffect(Date.now())}/> </span>
                <span ><DeleteOrder orderId={order.orderID} onOrderDeleted={() => setEffect(Date.now())}/> </span>   
