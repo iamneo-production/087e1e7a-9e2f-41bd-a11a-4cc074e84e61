@@ -49,11 +49,34 @@ namespace WebApp
             return _dataAccessLayer.editUser(userID, user);
         }
 
+<<<<<<< HEAD
         public string getUser()
+=======
+        public List<UserModel> getUser()
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         {
             return _dataAccessLayer.getUser();
         }
 
+<<<<<<< HEAD
+=======
+        public UserModel getUserByEmail(string email){
+            return _dataAccessLayer.getUserByEmail(email);
+        }
+
+        public string UpdatePassword(LoginModel login){
+            return _dataAccessLayer.UpdatePassword(login);
+        }
+
+        public string updateMobileNumber(UserModel user){
+            return _dataAccessLayer.updateMobileNumber(user);
+        }
+
+        public string updateusername(UserModel user){
+            return _dataAccessLayer.updateusername(user);
+        }
+
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         // ThemeController
         public List<ThemeModel> GetAllThemes()
         {
@@ -152,6 +175,7 @@ namespace WebApp
            return _dataAccessLayer.viewOrder();
         }
 
+<<<<<<< HEAD
         public string AdminDeleteOrder(int orderID)
         {
             return _dataAccessLayer.AdminDeleteOrder(orderID);
@@ -167,6 +191,28 @@ namespace WebApp
         public string Postreview(ReviewModel r)
         {
             return _dataAccessLayer.Postreview(r);
+=======
+         public IActionResult MyOrders(string email)
+        {
+
+           return _dataAccessLayer.MyOrders(email);
+        }
+
+        public string AdminDeleteOrder( int orderID)
+        {
+            return _dataAccessLayer.AdminDeleteOrder(orderID);
+        }
+        //Review Controller
+
+         public List<ReviewModel> GetReviews()
+        {
+	     return _dataAccessLayer.GetReviews();
+        }
+       
+        public string Postreview(ReviewModel review)
+        {
+            return _dataAccessLayer.Postreview(review);
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         }
     }
 }

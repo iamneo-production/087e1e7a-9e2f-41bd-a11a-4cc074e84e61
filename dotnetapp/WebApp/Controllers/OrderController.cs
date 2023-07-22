@@ -15,10 +15,14 @@ namespace WebApp.Controllers
     [Route("[controller]")]
     
     public class OrderController : ControllerBase
+<<<<<<< HEAD
     {   
     
 
         private readonly BusinessLayer bal = new BusinessLayer();
+=======
+    {   private readonly BusinessLayer bal = new BusinessLayer();
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
 
 
         [HttpPost]
@@ -56,6 +60,23 @@ namespace WebApp.Controllers
         {
             return bal.deleteOrder(orderId);
         }
+<<<<<<< HEAD
        
     }
+=======
+
+        [HttpGet]
+        [Route("user/getallorders")]
+        public IActionResult MyOrders(string userEmail)
+        {
+
+           return bal.MyOrders(userEmail);
+        }
+
+       
+    }
+    
+
+         
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
 }

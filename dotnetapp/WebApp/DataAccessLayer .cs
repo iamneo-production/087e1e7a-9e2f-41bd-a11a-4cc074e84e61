@@ -11,11 +11,18 @@ using System.Data;
 using System.Xml.Linq;
 namespace WebApp
 {
+<<<<<<< HEAD
       
    public class DataAccessLayer
      {   
             private string connectionString;
         private readonly IConfiguration _configuration;
+=======
+      public class DataAccessLayer
+        {   
+            private string connectionString;
+      
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         SqlConnection conn = null;
             public DataAccessLayer()
         {
@@ -28,17 +35,30 @@ namespace WebApp
         public bool isUserPresent(LoginModel lm)
         { 
             try{
+<<<<<<< HEAD
             SqlConnection con = new SqlConnection(connectionString);
+=======
+            
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "LoginModel_IsUserPresent";
             cmd.CommandType = CommandType.StoredProcedure;
 
+<<<<<<< HEAD
             cmd.Connection = con;
             cmd.Parameters.AddWithValue("@email", lm.email);
             cmd.Parameters.AddWithValue("@password", lm.password);
             con.Open();
             int count = (int)cmd.ExecuteScalar();
             con.Close();
+=======
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@email", lm.email);
+            cmd.Parameters.AddWithValue("@password", lm.password);
+            conn.Open();
+            int count = (int)cmd.ExecuteScalar();
+            conn.Close();
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             if (count > 0)
             {
                 return true;
@@ -55,6 +75,7 @@ namespace WebApp
         public bool isAdminPresent(LoginModel lm)
         { 
             try{
+<<<<<<< HEAD
             SqlConnection con = new SqlConnection(connectionString);
                 SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "AdminModel_IsAdminPresent";
@@ -65,6 +86,18 @@ namespace WebApp
             con.Open();
             int count = (int)cmd.ExecuteScalar();
             con.Close();
+=======
+           
+                SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "AdminModel_IsAdminPresent";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = conn;
+            cmd.Parameters.AddWithValue("@email", lm.email);
+            cmd.Parameters.AddWithValue("@password", lm.password);
+            conn.Open();
+            int count = (int)cmd.ExecuteScalar();
+            conn.Close();
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             if (count > 0)
             {
                 return true;
@@ -254,7 +287,11 @@ namespace WebApp
         }
        
 
+<<<<<<< HEAD
         public string getUser()
+=======
+        public List<UserModel> getUser()
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         {
             try
             {
@@ -277,7 +314,158 @@ namespace WebApp
                     um.userRole = dr["userRole"].ToString();
                     umlist.Add(um);
                 }
+<<<<<<< HEAD
                 return ("retrive all the user details");
+=======
+                return umlist;
+            }
+            catch (Exception ex)
+            {
+                return new List<UserModel>();
+            }
+        }
+
+         public UserModel getUserByEmail(string email)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_GetUserbyEmail";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", email);
+
+                UserModel user  = new UserModel();
+
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        user.username = dr["userName"].ToString();
+                        user.mobileNumber = dr["mobileNumber"].ToString();
+                    }
+                }
+                conn.Close();
+                return user;
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string change(UserModel user)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_updatePassword";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", user.email);
+                cmd.Parameters.AddWithValue("@password", user.password);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "Password Updated";
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string UpdatePassword(LoginModel login)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "LoginModel_UpdatePassword";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", login.email);
+                cmd.Parameters.AddWithValue("@password", login.password);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {   
+                    UserModel user = new UserModel();
+                    user.email = login.email;   
+                    user.password = login.password; 
+                    return change(user);
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string updateMobileNumber(UserModel user)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_UpdateMobileNumber";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", user.email);
+                cmd.Parameters.AddWithValue("@mobileNumber", user.mobileNumber);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "Mobile Number Updated";
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string updateusername(UserModel user)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_UpdateUsername";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", user.email);
+                cmd.Parameters.AddWithValue("@username", user.username);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "Username Updated";
+                }
+                else
+                {
+                    return "Error";
+                }
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             }
             catch (Exception ex)
             {
@@ -592,7 +780,11 @@ namespace WebApp
                 return (ex.Message);
             }
         }
+<<<<<<< HEAD
         //userside gift
+=======
+        
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         public string selectGift(GiftModel data)
         {
             try
@@ -769,7 +961,11 @@ namespace WebApp
             {
 
                 SqlCommand cmd = new SqlCommand();
+<<<<<<< HEAD
                 cmd.CommandText = "DeleteOrdersCart";
+=======
+                cmd.CommandText = "DeleteOrdersCartbyId";
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@orderID", orderID);
@@ -790,6 +986,7 @@ namespace WebApp
                 return ex.Message;
             }
         }
+<<<<<<< HEAD
 
         //admin side order part
         public IActionResult viewOrder()
@@ -814,6 +1011,32 @@ namespace WebApp
             return new JsonResult(orders);
         }
 
+=======
+        
+        public JsonResult  viewOrder()
+        {
+            
+                DataTable dt = new DataTable();
+                SqlCommand cmd = new SqlCommand("ViewOrders", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+              
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+                foreach (DataRow row in dt.Rows)
+                {
+                Dictionary<string, object> order = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                order[col.ColumnName] = row[col];
+                }
+                orders.Add(order);
+                }
+                return new JsonResult(orders);
+                
+              
+        }
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         public string AdminDeleteOrder(int orderID)
         {
             try
@@ -841,6 +1064,7 @@ namespace WebApp
                 return ex.Message;
             }
         }
+<<<<<<< HEAD
 
         //Review Controller
 
@@ -886,8 +1110,81 @@ namespace WebApp
             }
             catch (Exception ex)
             {
+=======
+        public JsonResult  MyOrders(string email)
+        {            
+                DataTable dt = new DataTable();
+                SqlCommand cmd = new SqlCommand("UserViewOrders", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@email", email);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+                foreach (DataRow row in dt.Rows)
+                {
+                Dictionary<string, object> order = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                order[col.ColumnName] = row[col];
+                }
+                orders.Add(order);
+                }
+                return new JsonResult(orders);
+        }
+
+        //Review Controller
+
+         public List<ReviewModel> GetReviews()
+        {
+	     List<ReviewModel> reviews=new List<ReviewModel>();
+         SqlDataReader sdr=null;
+            SqlCommand cmd = new SqlCommand("Getreview", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            conn.Open();
+            sdr = cmd.ExecuteReader();
+            while(sdr.Read()==true)
+            {
+                ReviewModel review = new ReviewModel();
+                review.orderId= Convert.ToInt32(sdr["orderId"]);
+                review.name = sdr["name"].ToString();
+                review.comments=sdr["comments"].ToString();
+
+                reviews.Add(review);
+            }
+            conn.Close();
+            return reviews;
+        }
+       
+        public string Postreview(ReviewModel review)
+        {
+            try{
+            SqlCommand cmd = new SqlCommand("Insertreview", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@orderId", review.orderId);
+            cmd.Parameters.AddWithValue("@name", review.name);
+            cmd.Parameters.AddWithValue("@comments", review.comments);
+            conn.Open();
+            int rowaffect = cmd.ExecuteNonQuery();
+            conn.Close();
+            if(rowaffect>0)
+            {
+                return "inserted sucessfully";
+            }
+            else
+            {
+                return "inserted failed";
+            }
+            }
+            catch(Exception ex){
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
                 return ex.Message;
             }
         }
     }
+<<<<<<< HEAD
 }
+=======
+       
+        
+    }  
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
