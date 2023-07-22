@@ -11,10 +11,18 @@ using System.Data;
 using System.Xml.Linq;
 namespace WebApp
 {
+<<<<<<< HEAD
+      
+   public class DataAccessLayer
+     {   
+            private string connectionString;
+        private readonly IConfiguration _configuration;
+=======
       public class DataAccessLayer
         {   
             private string connectionString;
       
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         SqlConnection conn = null;
             public DataAccessLayer()
         {
@@ -27,17 +35,30 @@ namespace WebApp
         public bool isUserPresent(LoginModel lm)
         { 
             try{
+<<<<<<< HEAD
+            SqlConnection con = new SqlConnection(connectionString);
+=======
             
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "LoginModel_IsUserPresent";
             cmd.CommandType = CommandType.StoredProcedure;
 
+<<<<<<< HEAD
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@email", lm.email);
+            cmd.Parameters.AddWithValue("@password", lm.password);
+            con.Open();
+            int count = (int)cmd.ExecuteScalar();
+            con.Close();
+=======
             cmd.Connection = conn;
             cmd.Parameters.AddWithValue("@email", lm.email);
             cmd.Parameters.AddWithValue("@password", lm.password);
             conn.Open();
             int count = (int)cmd.ExecuteScalar();
             conn.Close();
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             if (count > 0)
             {
                 return true;
@@ -54,6 +75,18 @@ namespace WebApp
         public bool isAdminPresent(LoginModel lm)
         { 
             try{
+<<<<<<< HEAD
+            SqlConnection con = new SqlConnection(connectionString);
+                SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "AdminModel_IsAdminPresent";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            cmd.Parameters.AddWithValue("@email", lm.email);
+            cmd.Parameters.AddWithValue("@password", lm.password);
+            con.Open();
+            int count = (int)cmd.ExecuteScalar();
+            con.Close();
+=======
            
                 SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "AdminModel_IsAdminPresent";
@@ -64,6 +97,7 @@ namespace WebApp
             conn.Open();
             int count = (int)cmd.ExecuteScalar();
             conn.Close();
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             if (count > 0)
             {
                 return true;
@@ -253,7 +287,11 @@ namespace WebApp
         }
        
 
+<<<<<<< HEAD
+        public string getUser()
+=======
         public List<UserModel> getUser()
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         {
             try
             {
@@ -276,6 +314,9 @@ namespace WebApp
                     um.userRole = dr["userRole"].ToString();
                     umlist.Add(um);
                 }
+<<<<<<< HEAD
+                return ("retrive all the user details");
+=======
                 return umlist;
             }
             catch (Exception ex)
@@ -424,6 +465,7 @@ namespace WebApp
                 {
                     return "Error";
                 }
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
             }
             catch (Exception ex)
             {
@@ -738,7 +780,11 @@ namespace WebApp
                 return (ex.Message);
             }
         }
+<<<<<<< HEAD
+        //userside gift
+=======
         
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         public string selectGift(GiftModel data)
         {
             try
@@ -915,7 +961,11 @@ namespace WebApp
             {
 
                 SqlCommand cmd = new SqlCommand();
+<<<<<<< HEAD
+                cmd.CommandText = "DeleteOrdersCart";
+=======
                 cmd.CommandText = "DeleteOrdersCartbyId";
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@orderID", orderID);
@@ -936,6 +986,32 @@ namespace WebApp
                 return ex.Message;
             }
         }
+<<<<<<< HEAD
+
+        //admin side order part
+        public IActionResult viewOrder()
+        {
+
+            DataTable dt = new DataTable();
+            SqlCommand cmd = new SqlCommand("ViewOrders", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+            foreach (DataRow row in dt.Rows)
+            {
+                Dictionary<string, object> order = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                    order[col.ColumnName] = row[col];
+                }
+                orders.Add(order);
+            }
+            return new JsonResult(orders);
+        }
+
+=======
         
         public JsonResult  viewOrder()
         {
@@ -960,6 +1036,7 @@ namespace WebApp
                 
               
         }
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         public string AdminDeleteOrder(int orderID)
         {
             try
@@ -987,6 +1064,53 @@ namespace WebApp
                 return ex.Message;
             }
         }
+<<<<<<< HEAD
+
+        //Review Controller
+
+        public List<ReviewModel> Get()
+        {
+            List<ReviewModel> reviewobj = new List<ReviewModel>();
+            SqlDataReader sdr = null;
+            SqlCommand cmd = new SqlCommand("Get_Review", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            conn.Open();
+            sdr = cmd.ExecuteReader();
+            while (sdr.Read() == true)
+            {
+                ReviewModel r = new ReviewModel();
+                r.name = sdr["name"].ToString();
+                r.comments = sdr["comments"].ToString();
+
+                reviewobj.Add(r);
+            }
+            conn.Close();
+            return reviewobj;
+        }
+
+        public string Postreview(ReviewModel r)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand("Insert_Review", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@name", r.name);
+                cmd.Parameters.AddWithValue("@comments", r.comments);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "inserted sucessfully";
+                }
+                else
+                {
+                    return "inserted failed";
+                }
+            }
+            catch (Exception ex)
+            {
+=======
         public JsonResult  MyOrders(string email)
         {            
                 DataTable dt = new DataTable();
@@ -1052,10 +1176,15 @@ namespace WebApp
             }
             }
             catch(Exception ex){
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
                 return ex.Message;
             }
         }
     }
+<<<<<<< HEAD
+}
+=======
        
         
     }  
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4

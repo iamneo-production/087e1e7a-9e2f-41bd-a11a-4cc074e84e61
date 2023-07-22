@@ -49,11 +49,17 @@ namespace WebApp
             return _dataAccessLayer.editUser(userID, user);
         }
 
+<<<<<<< HEAD
+        public string getUser()
+=======
         public List<UserModel> getUser()
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         {
             return _dataAccessLayer.getUser();
         }
 
+<<<<<<< HEAD
+=======
         public UserModel getUserByEmail(string email){
             return _dataAccessLayer.getUserByEmail(email);
         }
@@ -70,6 +76,7 @@ namespace WebApp
             return _dataAccessLayer.updateusername(user);
         }
 
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         // ThemeController
         public List<ThemeModel> GetAllThemes()
         {
@@ -168,6 +175,23 @@ namespace WebApp
            return _dataAccessLayer.viewOrder();
         }
 
+<<<<<<< HEAD
+        public string AdminDeleteOrder(int orderID)
+        {
+            return _dataAccessLayer.AdminDeleteOrder(orderID);
+        }
+
+        //Review Controller
+
+        public List<ReviewModel> Get()
+        {
+            return _dataAccessLayer.Get();
+        }
+
+        public string Postreview(ReviewModel r)
+        {
+            return _dataAccessLayer.Postreview(r);
+=======
          public IActionResult MyOrders(string email)
         {
 
@@ -188,6 +212,7 @@ namespace WebApp
         public string Postreview(ReviewModel review)
         {
             return _dataAccessLayer.Postreview(review);
+>>>>>>> ed86e1a80104bc9a714eaed6fb2bdbfc379c90a4
         }
     }
 }
