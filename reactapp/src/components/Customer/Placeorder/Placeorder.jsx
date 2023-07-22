@@ -161,7 +161,7 @@ function Placeorder() {
         toast.success("Order Placed")
       }
       else if(result.data==="Insufficient gift quantity"){
-        toast.warning("out of stock")
+        toast.warning("This item is currently out of stock")
       }
     }).catch((error) => {
       console.log("All fields are required");
