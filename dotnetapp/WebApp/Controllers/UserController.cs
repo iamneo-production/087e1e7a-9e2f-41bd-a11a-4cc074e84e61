@@ -22,7 +22,6 @@ namespace WebApp.Controllers
         [Route("user/addUser")]
         public string addUser(UserModel user)
         {
-
             return bal.addUser(user);
         }
         [HttpDelete]
