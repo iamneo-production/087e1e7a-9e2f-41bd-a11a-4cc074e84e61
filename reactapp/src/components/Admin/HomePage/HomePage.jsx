@@ -2,7 +2,7 @@ import React ,{useState,useEffect} from "react";
 import NavigationMenu from "../Navbar/Navbar";
 import { Table } from "react-bootstrap";
 import './HomePage.css';
-import Addgift from "../Addgift/Addgift";
+import AddGift from "../AddGift/AddGift";
 import axios from "axios";
 import Editgift from "../Editgift/Editgift"
 import Deletegift from "../Deletegift/Deletegift";
@@ -56,7 +56,7 @@ const HomePage=()=>{
                       <td>{gift.giftQuantity}</td>
                       <td>
                         
-                      <span id={"editGift"+(index+1)}><Editgift giftid={gift.giftId} onGiftEdited={() => setEffect(Date.now())}/></span>
+                      <span id={"editGift"+(index+1)}><Editgift giftData={gift} onGiftEdited={() => setEffect(Date.now())}/></span>
                       <span id={"deleteGift"+(index+1)}><Deletegift giftid={gift.giftId} onGiftDeleted={() => setEffect(Date.now())}/></span>
                         
                         </td>
@@ -66,7 +66,7 @@ const HomePage=()=>{
             </Table>
     </div>
     <div className="addgifts">
-      <Addgift onGiftAdded={() => setEffect(Date.now())}/>
+      <AddGift onGiftAdded={() => setEffect(Date.now())}/>
       </div>
 </div>
         </>
