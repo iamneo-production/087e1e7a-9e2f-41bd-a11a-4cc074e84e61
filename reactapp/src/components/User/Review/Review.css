@@ -1,0 +1,15 @@
+.ReviewForm{
+    display: flex;
+    justify-content: center;   
+    align-items: center;
+    padding: 50px;
+    flex-direction: column;
+    
+}
+.ReviewForm .form-control{
+    width:300px;
+}
+.custom-icon {
+    font-size: 180px;
+  }
+  

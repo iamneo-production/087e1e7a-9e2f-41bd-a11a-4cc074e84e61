@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+=======
+>>>>>>> 9c6862546931a9e921c71b606e8279bfd212eeaf
 /home/coder/project/workspace/dotnetapp/bin/Debug/net6.0/appsettings.Development.json
 /home/coder/project/workspace/dotnetapp/bin/Debug/net6.0/appsettings.json
 /home/coder/project/workspace/dotnetapp/bin/Debug/net6.0/TestProject/obj/project.assets.json
