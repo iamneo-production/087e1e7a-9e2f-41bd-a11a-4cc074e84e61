@@ -2,7 +2,6 @@ import React, {useState,useEffect} from "react";
 import { Modal,Button,Form,DropdownButton,Dropdown } from "react-bootstrap";
 import { FaRegEdit } from "react-icons/fa";
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const EditOrder=(props)=>{ 
     const order = props.orderData;
@@ -10,9 +9,10 @@ const EditOrder=(props)=>{
   const [themes,setThemes] = useState([]);
   useEffect(() => {
   //Get themes Api
-  axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
+  axios.get('https://8080-afafecaabdbcabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
     .then(response => {
       setThemes(response.data);
+     // console.log(themes);
     })
     .catch(error => {
       console.log(error);
@@ -33,8 +33,10 @@ const [themePrice,SetThemePrice]=useState(0);
 const Price= (order.giftPrice + themePrice)*Quantity;
 const [themeModel,setThemeModel]=useState([])
 const [selectedThemes, setSelectedThemes] = useState([]);
+
 const handleSubmit=(e)=>{
     e.preventDefault();
+    console.log(Price);
           const Orderdata={
           orderName:Name,
           orderDate:orderDate,
@@ -43,19 +45,20 @@ const handleSubmit=(e)=>{
           orderEmail:localStorage.getItem("email"), 
           orderDescription:Descripation,
           orderPrice:Price,
+          
           giftModel:giftModel,
           themeModel:themeModel,
           orderQuantity:Quantity
       }
-      console.log(order)
-      axios.put('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
+    
+      axios.put('https://8080-afafecaabdbcabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
         console.log(result.data);
         if(result.data === "order updated"){
           props.onOrderEdited();
           handleClose();
         }
       }).catch((error)=>{
-        toast.warning(error);
+        alert(error);
       })
      
   }

@@ -9,13 +9,13 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
 
-const Myorders=()=> {
+const Cart=()=> {
   const email = localStorage.getItem("email");
   const [placedOrders,setPlacedOrders]=useState([]);
   const [effect,setEffect]=useState('');
   
   const fetchOrders=()=>{
-    axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getOrdersCart', {
+    axios.get('https://8080-afafecaabdbcabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/getOrdersCart', {
       params: {
         userEmail: email
       }
@@ -34,7 +34,7 @@ const Myorders=()=> {
 
      const handlePay=()=>{
       //Add order api
-      axios.post('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrders', email, {
+      axios.post('https://8080-afafecaabdbcabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrders', email, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -91,4 +91,4 @@ const Myorders=()=> {
     </div>
   );
 }
-export default Myorders;
+export default Cart;

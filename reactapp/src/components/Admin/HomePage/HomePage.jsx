@@ -17,7 +17,7 @@ const HomePage=()=>{
     
     useEffect(() => {
       //Get themes Api
-    axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getGift')
+    axios.get('https://8080-afafecaabdbcabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getGift')
       .then(response => {
       setGifts(response.data);
      

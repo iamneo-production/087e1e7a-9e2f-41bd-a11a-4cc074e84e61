@@ -884,7 +884,7 @@ namespace dotnetapp
                 cmd.Parameters.AddWithValue("@orderName", order.orderName);
                 cmd.Parameters.AddWithValue("@orderDescription", order.orderDescription);
                 cmd.Parameters.AddWithValue("@themeModel", GetThemeModelXml(order.themeModel));
-               
+                cmd.Parameters.AddWithValue("@orderPrice",order.orderPrice);
                 cmd.Parameters.AddWithValue("@orderDate", order.orderDate);
               
                 cmd.Parameters.AddWithValue("@orderAddress", order.orderAddress);
