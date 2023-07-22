@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,7 +8,7 @@ namespace WebApp.Models
     public class OrderModel
     {
         public int orderId { get; set; }
-      
+
         public string orderName { get; set; }
         public string orderDescription { get; set; }
 
@@ -21,6 +21,7 @@ namespace WebApp.Models
         public string orderAddress { get; set; }
         public string orderPhone { get; set; }
         public string orderEmail { get; set; }
+
         public string orderQuantity { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
@@ -12,10 +12,11 @@ using System.Xml.Linq;
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    
     public class OrderController : ControllerBase
-    {   private readonly BusinessLayer bal = new BusinessLayer();
+    {   
+    
+
+        private readonly BusinessLayer bal = new BusinessLayer();
 
 
         [HttpPost]
@@ -64,7 +65,4 @@ namespace WebApp.Controllers
 
        
     }
-    
-
-         
 }
