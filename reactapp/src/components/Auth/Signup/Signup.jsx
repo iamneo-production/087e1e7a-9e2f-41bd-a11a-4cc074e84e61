@@ -44,7 +44,7 @@ const toggleConfirmPasswordVisibility = () => {
       errors.userName = 'Name is required';
     }
     // Email validation
-    if (!email) {
+      if (!email) {
       errors.email = 'Email is required';
     } else if (!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/.test(email)){
       errors.email = 'Invalid email address';
@@ -52,8 +52,13 @@ const toggleConfirmPasswordVisibility = () => {
     // Password validation
     if (!password) {
       errors.password = 'Password is required';
-    } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/.test(password)) {
-      errors.password = 'Invalid Password. Must contain at least one number, one uppercase letter, one lowercase letter, one special character (!@#$%^&*), and be at least 8 characters long';
+    }  else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/.test(
+        password
+      )
+    ) {
+      errors.password =
+        'Invalid Password. Must contain at least one number, one uppercase letter, one lowercase letter, one special character (!@#$%^&*), and be at least 8 characters long';
     } else {
       setPasswordError(''); // Clear the password error message
     }
@@ -87,12 +92,20 @@ const toggleConfirmPasswordVisibility = () => {
           userrole : userRole,
       }
         
-        const url = "https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addUser";
+        const url = "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addUser";
         axios.post(url,data).then((result)=>{
           console.log(result.data);
-          if(result.data === "User Added" || result.data==="user exists"||result.data==='Admin Added'){
-            navigate("/");
+          if(result.data==="user exists"){
+            toast.warning("User Already Exists");
           }
+          else if (result.data === "User Added" || result.data === 'Admin Added') {
+            toast.success("SignUp Successful");
+            setTimeout(() => {
+               
+              navigate("/");
+            }, 3000);
+          }
+          
         }).catch((error)=>{
           toast.warning("Enter all the fields");
         })
@@ -105,11 +118,7 @@ const toggleConfirmPasswordVisibility = () => {
           <div className="Signup">
             <ToastContainer/>
           <Row className="justify-content-center align-items-center" style={{ height: '100%',width:'100%' }}>
-          {/*Col xs={12} md={8} lg={4} ><div className="loginImg">
-            <img src='' 
-             alt="LoginImage" height={'500px'} /></div>
-          </Col>
-    <Col xs={1}  ></Col>*/}
+          
         <Col xs={12} md={8} lg={4} >
         <div className="SignupForm" >
         <Form onSubmit={handleSubmit}>
@@ -125,7 +134,7 @@ const toggleConfirmPasswordVisibility = () => {
         </Form.Select>
         {errors.userRole && <span>{errors.userRole}</span>}
         </Form.Group>
-
+<label>Email: </label>
         <Form.Group className="mb-3">
       <InputGroup>
        <InputGroup.Text> <FiMail /> </InputGroup.Text>
@@ -133,12 +142,12 @@ const toggleConfirmPasswordVisibility = () => {
         </InputGroup>
        {errors.email && <span>{errors.email}</span>}
       </Form.Group>
-
+      <label>Username: </label>
         <Form.Group className="mb-3" >
         <Form.Control type="text" id="username"  data-testid="username" placeholder=" Enter Username"  onChange={(e) => setuserName(e.target.value)} required />
         {errors.userName && <span>{errors.userName}</span>}
         </Form.Group>
-
+        <label>MobileNumber: </label>
         <Form.Group className="mb-3" >
         <InputGroup className="mb-3">
        <InputGroup.Text><FaPhone /></InputGroup.Text>
@@ -146,11 +155,11 @@ const toggleConfirmPasswordVisibility = () => {
        </InputGroup> 
        {errors.mobileNumber && <span>{errors.mobileNumber}</span>}   
         </Form.Group>
-
+        <label>Password: </label>
         <Form.Group className="mb-3">
   <InputGroup>
     <FormControl
-      type={showPassword ? 'type' : 'password'}
+      type={showPassword ? 'text' : 'password'}
       id="password"
       data-testid="password"
       placeholder="Password"
@@ -166,7 +175,7 @@ const toggleConfirmPasswordVisibility = () => {
   </InputGroup>
   {errors.password && <span>{errors.password}</span>}
 </Form.Group>
-
+<label>Confirm Password: </label>
 <Form.Group className="mb-3">
   <InputGroup>
     <FormControl
