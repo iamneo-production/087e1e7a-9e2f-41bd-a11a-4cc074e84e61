@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { toast } from 'react-toastify';
@@ -113,6 +114,7 @@ const AddGift = (props) => {
         />
         {errors.giftName && <span className="error-message">{errors.giftName}</span>}
       </Form.Group>
+      <label>Gift Price:</label>
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
@@ -123,6 +125,7 @@ const AddGift = (props) => {
         />
         {errors.giftPrice && <span className="error-message">{errors.giftPrice}</span>}
       </Form.Group>
+      <label>Gift Image:</label>
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
@@ -133,6 +136,7 @@ const AddGift = (props) => {
         />
         {errors.giftImage && <span className="error-message">{errors.giftImage}</span>}
       </Form.Group>
+      <label>Gift Quantity:</label>
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
@@ -143,6 +147,7 @@ const AddGift = (props) => {
         />
         {errors.giftQuantity && <span className="error-message">{errors.giftQuantity}</span>}
       </Form.Group>
+      <label>Gift Details:</label>
       <Form.Group className="mb-3">
         <Form.Control
           type="text"

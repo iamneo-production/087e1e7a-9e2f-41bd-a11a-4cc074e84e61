@@ -4,13 +4,19 @@ import {  Card,Dropdown } from "react-bootstrap";
 import './Homepage.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const HoamePage=()=>{
     const navigate = useNavigate();
     const handleGift = (gift) => {
-      navigate('/placeorder',{state:gift});
-    }
+      if (gift.giftQuantity > 0) {
+        navigate('/placeorder', { state: gift });
+      } else {
+        toast.warning('This item is currently Out of Stock');
+      }
+    };
     
     const [gifts,setGifts] = useState([]);
     const [sortBy, setSortBy] = useState("");
@@ -56,18 +62,23 @@ const HoamePage=()=>{
             </Dropdown.Menu>
             </Dropdown>
             </div>
-              <div>
-                {gifts.map((gift,index)=>
-                <Card style={{ width: '18rem' }}  key={gift.giftId} id={"grid"+(index+1)} >
-                <Card.Img variant="top" onClick={()=>handleGift(gift)} src={gift.giftImageUrl} width={180} height={180} />
-                <Card.Body>
-                    <Card.Title data-testid="giftName">Name : {gift.giftName}</Card.Title>
-                    <Card.Text data-testid="giftPrice">Price : ₹{gift.giftPrice}</Card.Text>
-                </Card.Body>
-                </Card>
-              
-            )}  </div>
-            </div>
+            <div>
+        {gifts.map((gift, index) => (
+          <Card style={{ width: '18rem' }} key={gift.giftId} id={'grid' + (index + 1)}>
+            <Card.Img variant="top" onClick={() => handleGift(gift)} src={gift.giftImageUrl} width={180} height={180} />
+            <Card.Body>
+              <Card.Title data-testid="giftName">Name: {gift.giftName}</Card.Title>
+              <Card.Text data-testid="giftPrice">Price: ₹{gift.giftPrice}</Card.Text>
+              {gift.giftQuantity === 0 ? (
+              <Card.Text data-testid="giftQuantity">Out of Stock</Card.Text>
+          ) : (
+          <Card.Text data-testid="giftQuantity">Quantity: {gift.giftQuantity}</Card.Text>
+          )}
+            </Card.Body>
+          </Card>
+        ))}
+      </div>
+    </div>
         </div>
     )
 }
