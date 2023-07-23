@@ -38,7 +38,7 @@ function Placeorder() {
 
   useEffect(() => {
     //Get themes Api
-    axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
+    axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
       .then(response => {
         setThemes(response.data);
       })
@@ -65,13 +65,26 @@ function Placeorder() {
   };
 
   useEffect(() => {
-  //Get themes Api
-  axios.get('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getTheme')
-    .then(response => {
-      setThemes(response.data);
-    })
-    .catch(error => {
-      console.log(error);
+    // Convert the selectedThemes array to a comma-separated string
+    const themesString = selectedThemes.join(", ");
+    setSelectedThemesString(themesString);
+  }, [selectedThemes]);
+
+  const navigate = useNavigate();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Reset errors before validation
+    setErrors({
+      Name: '',
+      orderDate: '',
+      Address: '',
+      PhoneNo: '',
+      EmailId: '',
+      Description: '',
+      Quantity: '',
+      selectedThemes: '',
     });
 
     // Validation checks
@@ -141,7 +154,7 @@ function Placeorder() {
     }
 
     console.log(Orderdata)
-    axios.post('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrdersCart',Orderdata).then((result)=>{
+    axios.post('https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/addOrdersCart', Orderdata).then((result) => {
       console.log(result.data);
       if (result.data === "Order added") {
         navigate('/Cart');

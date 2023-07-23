@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { toast } from 'react-toastify';
@@ -14,8 +13,13 @@ const AddGift = (props) => {
   const [errors, setErrors] = useState({});
 
   const handleGiftName = (e) => {
-    setGiftName(e.target.value);
-    setErrors({ ...errors, giftName: '' }); // Clear error when input changes
+    const inputValue = e.target.value;
+    if (/^[a-zA-Z ]+$/.test(inputValue) || inputValue === "") {
+      setGiftName(inputValue);
+      setErrors({ ...errors, giftName: "" }); // Clear error when input is valid
+    } else {
+      setErrors({ ...errors, giftName: "Gift name should only contain alphabets" });
+    }
   };
 
   const handleGiftImage = (e) => {
@@ -34,8 +38,13 @@ const AddGift = (props) => {
   };
 
   const handleGiftDetails = (e) => {
-    setGiftDetails(e.target.value);
-    setErrors({ ...errors, giftDetails: '' }); // Clear error when input changes
+    const inputValue = e.target.value;
+    if (/^[a-zA-Z ]+$/.test(inputValue) || inputValue === "") {
+      setGiftDetails(inputValue);
+      setErrors({ ...errors, giftDetails: "" }); // Clear error when input is valid
+    } else {
+      setErrors({ ...errors, giftDetails: "Gift details should only contain alphabets" });
+    }
   };
 
   const handleAddGift = (event) => {
@@ -103,6 +112,8 @@ const AddGift = (props) => {
       <Form.Text className="text-muted">
         <h1>Add Gift</h1>
       </Form.Text>
+      <label>Gift Name:</label>
+
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
@@ -112,21 +123,23 @@ const AddGift = (props) => {
           value={GiftName}
           onChange={handleGiftName}
         />
-        {errors.giftName && <span className="error-message">{errors.giftName}</span>}
+        {errors.giftName && <span style={{color:"red"}} className="error-message">{errors.giftName}</span>}
       </Form.Group>
       <label>Gift Price:</label>
+
       <Form.Group className="mb-3">
         <Form.Control
-          type="text"
+          type="number"
           placeholder="Enter the gift price"
           data-testid="giftPrice"
           value={GiftPrice}
           onChange={handleGiftPrice}
         />
-        {errors.giftPrice && <span className="error-message">{errors.giftPrice}</span>}
+        {errors.giftPrice && <span style={{color:"red"}} className="error-message">{errors.giftPrice}</span>}
       </Form.Group>
-      <label>Gift Image:</label>
       <Form.Group className="mb-3">
+      <label>Gift Image Url:</label>
+
         <Form.Control
           type="text"
           placeholder="Enter the gift image URL"
@@ -134,20 +147,22 @@ const AddGift = (props) => {
           value={GiftImage}
           onChange={handleGiftImage}
         />
-        {errors.giftImage && <span className="error-message">{errors.giftImage}</span>}
+        {errors.giftImage && <span style={{color:"red"}} className="error-message">{errors.giftImage}</span>}
       </Form.Group>
       <label>Gift Quantity:</label>
+
       <Form.Group className="mb-3">
         <Form.Control
-          type="text"
+          type="number"
           placeholder="Enter the product quantity"
           id="enterGiftQuantity"
           value={GiftQuantity}
           onChange={handleGiftQuantity}
         />
-        {errors.giftQuantity && <span className="error-message">{errors.giftQuantity}</span>}
+        {errors.giftQuantity && <span style={{color:"red"}} className="error-message">{errors.giftQuantity}</span>}
       </Form.Group>
       <label>Gift Details:</label>
+
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
@@ -156,7 +171,7 @@ const AddGift = (props) => {
           value={GiftDetails}
           onChange={handleGiftDetails}
         />
-        {errors.giftDetails && <span className="error-message">{errors.giftDetails}</span>}
+        {errors.giftDetails && <span style={{color:"red"}} className="error-message">{errors.giftDetails}</span>}
       </Form.Group>
       <Button type="submit" id="addGiftButton" onClick={handleAddGift}>
         ADD

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { useLocation,useNavigate } from 'react-router-dom'; // Remove useHistory
+import { useLocation, useNavigate } from 'react-router-dom';
 import { FcApproval } from "react-icons/fc";
 import NavigationMenu from '../../Customer/Navbar/Navbar';
 import './Review.css';
@@ -30,29 +30,30 @@ const Review = () => {
     }
   };
 
-  const navigate = useNavigate(); // Use useNavigate for redirection
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
+    alert("Review Sumbitted Sucessfully");
     event.preventDefault();
     if (!name || !comments) {
       setValidationError(true);
     } else {
       setValidationError(false);
-      alert("Review Submitted Successfully");
       const data = {
         name: name,
-        comments : comments,
-        orderId : orderId
-    }
+        comments: comments,
+        orderId: orderId
+      };
       const url = "https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/insertreview";
-      axios.post(url,data).then((result)=>{
+      axios.post(url, data).then((result) => {
         console.log(result.data);
         if (result.data === "inserted sucessfully") {
-          navigate("/homepage"); // Redirect to homepage on successful review submission
+          navigate("/homePage"); // Redirect to homepage on successful review submission
         }
+       
       }).catch((error) => {
         console.log(error);
-      })
+      });
 
       // Reset the form
       setName('');

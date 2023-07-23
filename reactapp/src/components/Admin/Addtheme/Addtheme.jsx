@@ -15,27 +15,34 @@ const Addtheme = (props) => {
   });
 
   const handleThemeName = (e) => {
-    setThemeName(e.target.value);
-    setError((prevError) => ({
-      ...prevError,
-      themeNameError: "", // Clear the error when the user starts typing
-    }));
+    const inputValue = e.target.value;
+    if (/^[a-zA-Z ]+$/.test(inputValue) || inputValue === "") {
+      setThemeName(inputValue);
+      setError((prevError) => ({ ...prevError, themeNameError: "" })); // Clear error when input is valid
+    } else {
+      setError((prevError) => ({
+        ...prevError,
+        themeNameError: "Theme Name should only contain alphabets",
+      }));
+    }
   };
 
   const handleThemePrice = (e) => {
     setThemePrice(e.target.value);
-    setError((prevError) => ({
-      ...prevError,
-      themePriceError: "", // Clear the error when the user starts typing
-    }));
+    setError((prevError) => ({ ...prevError, themePriceError: "" })); // Clear error when input changes
   };
 
   const handleThemeDescription = (e) => {
-    setThemeDescription(e.target.value);
-    setError((prevError) => ({
-      ...prevError,
-      themeDescriptionError: "", // Clear the error when the user starts typing
-    }));
+    const inputValue = e.target.value;
+    if (/^[a-zA-Z ]+$/.test(inputValue) || inputValue === "") {
+      setThemeDescription(inputValue);
+      setError((prevError) => ({ ...prevError, themeDescriptionError: "" })); // Clear error when input is valid
+    } else {
+      setError((prevError) => ({
+        ...prevError,
+        themeDescriptionError: "Theme Description should only contain alphabets",
+      }));
+    }
   };
 
   const handleAddTheme = (e) => {
@@ -77,7 +84,7 @@ const Addtheme = (props) => {
       };
 
       const url =
-        "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
+        "https://8080-aeeceaafaebbabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
       axios
         .post(url, themeData)
         .then((result) => {
