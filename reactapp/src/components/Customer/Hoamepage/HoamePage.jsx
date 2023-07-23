@@ -23,7 +23,7 @@ const HoamePage=()=>{
 
     useEffect(() => {
       // Get Gifts API
-      axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getgift')
+      axios.get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/admin/getgift')
         .then(response => {
           const fetchedGifts = response.data;
           let sortedGifts = [...fetchedGifts];

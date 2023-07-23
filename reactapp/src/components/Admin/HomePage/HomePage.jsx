@@ -2,7 +2,7 @@ import React ,{useState,useEffect} from "react";
 import NavigationMenu from "../Navbar/Navbar";
 import { Table } from "react-bootstrap";
 import './HomePage.css';
-import AddGift from "../AddGift/AddGift";
+import AddGift from "../Addgift/Addgift";
 import axios from "axios";
 import Editgift from "../Editgift/Editgift"
 import Deletegift from "../Deletegift/Deletegift";
@@ -17,7 +17,7 @@ const HomePage=()=>{
     
     useEffect(() => {
       //Get themes Api
-    axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getGift')
+    axios.get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/admin/getGift')
       .then(response => {
       setGifts(response.data);
      

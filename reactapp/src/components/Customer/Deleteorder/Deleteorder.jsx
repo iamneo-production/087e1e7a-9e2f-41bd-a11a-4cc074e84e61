@@ -7,7 +7,7 @@ const DeleteOrder=(props)=>{
     const orderId = props.orderId;
 
     const handleDelete=(id)=>{
-    axios.delete("https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/user/deleteOrder/"+id).then(
+    axios.delete("https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/user/deleteOrder/"+id).then(
         (response)=>{
          if(response.data==='order deleted'){
             toast.success("Order Deleted");
