@@ -11,15 +11,14 @@ namespace dotnetapp
         
        
   private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
-  
 
         // AuthController
-        public bool isUserPresent(LoginModel lm)
+        public string isUserPresent(LoginModel lm)
         {
             return _dataAccessLayer.isUserPresent(lm);
         }
 
-        public bool isAdminPresent(LoginModel lm)
+        public string isAdminPresent(LoginModel lm)
         {
             return _dataAccessLayer.isAdminPresent(lm);
         }
@@ -70,7 +69,6 @@ namespace dotnetapp
         public string updateusername(UserModel user){
             return _dataAccessLayer.updateusername(user);
         }
-        
 
         // ThemeController
         public List<ThemeModel> GetAllThemes()
@@ -103,7 +101,6 @@ namespace dotnetapp
         {
             return _dataAccessLayer.selectTheme(data);
         }
-        
 
         // GiftController
         public List<GiftModel> getAllGifts()
@@ -192,6 +189,5 @@ namespace dotnetapp
         {
             return _dataAccessLayer.Postreview(review);
         }
-
     }
 }
