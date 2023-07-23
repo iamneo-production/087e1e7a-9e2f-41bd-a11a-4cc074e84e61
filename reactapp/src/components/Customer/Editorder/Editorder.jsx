@@ -55,7 +55,7 @@ const handleSubmit=(e)=>{
           orderQuantity:Quantity
       }
       console.log(order)
-      axios.put('https://8080-ecdbffcdccababadfbbdfdacbcfcecaabcfba.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
+      axios.put('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/user/editOrder/'+order.orderID,Orderdata).then((result)=>{
         console.log(result.data);
         if(result.data === "order updated"){
           props.onOrderEdited();
