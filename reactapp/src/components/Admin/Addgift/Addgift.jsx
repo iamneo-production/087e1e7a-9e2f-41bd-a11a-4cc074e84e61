@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { toast } from 'react-toastify';
@@ -103,6 +102,7 @@ const AddGift = (props) => {
       <Form.Text className="text-muted">
         <h1>Add Gift</h1>
       </Form.Text>
+      <label>Gift Name:</label>
       <Form.Group className="mb-3">
         <Form.Control
           type="text"
