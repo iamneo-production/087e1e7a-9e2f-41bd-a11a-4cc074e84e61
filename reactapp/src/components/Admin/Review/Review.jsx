@@ -6,7 +6,7 @@ import "./Review.css"
 const Review=()=>{
     const [reviews,setreviews]=useState([]);
     useEffect(()=>{
-          axios.get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/getreview').then((response) => {
+          axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcfcecaabcfba.project.examly.io/getreview').then((response) => {
            
       setreviews(response.data);
     });

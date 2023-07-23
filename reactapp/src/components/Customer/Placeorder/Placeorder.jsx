@@ -38,7 +38,7 @@ function Placeorder() {
 
   useEffect(() => {
     //Get themes Api
-    axios.get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/admin/getTheme')
+    axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcfcecaabcfba.project.examly.io/admin/getTheme')
       .then(response => {
         setThemes(response.data);
       })
@@ -154,7 +154,7 @@ function Placeorder() {
     }
 
     console.log(Orderdata)
-    axios.post('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/user/addOrdersCart', Orderdata).then((result) => {
+    axios.post('https://8080-dafbecdaebfdaaaabadfbbdfdacbcfcecaabcfba.project.examly.io/user/addOrdersCart', Orderdata).then((result) => {
       console.log(result.data);
       if (result.data === "Order added") {
         navigate('/Cart');

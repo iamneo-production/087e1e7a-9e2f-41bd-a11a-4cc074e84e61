@@ -44,7 +44,7 @@ const Review = () => {
         comments: comments,
         orderId: orderId
       }
-      const url = "https://8080-fbfbaaaeabebabafdabadfbbdfdacbcefeddcbcbaffb.project.examly.io/insertreview";
+      const url = "https://8080-dafbecdaebfdaaaabadfbbdfdacbcfcecaabcfba.project.examly.io/insertreview";
       axios.post(url, data).then((result) => {
         console.log(result.data);
         if (result.data === "inserted sucessfully") {

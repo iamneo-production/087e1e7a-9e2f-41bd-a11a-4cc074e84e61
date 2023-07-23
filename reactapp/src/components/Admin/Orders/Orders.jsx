@@ -6,7 +6,7 @@ import './Orders.css'
 const Orders=()=>{
     const [orders,setOrders]=useState([]);
     useEffect(()=>{
-          axios.get('https://8080-fbfbaaaeabebabafdabadfbbdfdacbcfcecaabcfba.project.examly.io/admin/getallorders').then((response) => {
+          axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getallorders').then((response) => {
       setOrders(response.data);
     });
 
