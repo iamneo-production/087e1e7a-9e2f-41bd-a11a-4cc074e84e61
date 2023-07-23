@@ -22,6 +22,8 @@ namespace WebApp.Controllers
             return Ok(bal.getAllGifts());
         } 
         
+
+
         [HttpPost]
         [Route("admin/addGift")]
         public string addGift(GiftModel data)
@@ -42,7 +44,6 @@ namespace WebApp.Controllers
         {
             return bal.DeleteGift(giftid);
         }
-        
         [HttpPost]
         [Route("user/selectGift")]
         public string selectGift(GiftModel data)

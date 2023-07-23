@@ -9,7 +9,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Xml.Linq;
 using WebApp.Models;
-namespace WebApp
+namespace  WebApp
 {
         public class DataAccessLayer
         {   
@@ -894,7 +894,36 @@ namespace WebApp
              }
          }
             
-          
+           /* try{
+                SqlCommand cmd = new SqlCommand("addOrdersCart", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@orderName", order.orderName);
+                cmd.Parameters.AddWithValue("@orderDescription", order.orderDescription);
+                cmd.Parameters.AddWithValue("@ThemeModel", GetThemeModelXml(order.themeModel));
+                cmd.Parameters.AddWithValue("@GiftId", order.giftModel.giftId);
+                cmd.Parameters.AddWithValue("@orderDate", order.orderDate);
+                cmd.Parameters.AddWithValue("@orderPrice", order.orderPrice);
+                cmd.Parameters.AddWithValue("@orderAddress", order.orderAddress);
+                cmd.Parameters.AddWithValue("@orderPhone", order.orderPhone);
+                cmd.Parameters.AddWithValue("@orderEmail", order.orderEmail);
+                cmd.Parameters.AddWithValue("@orderQuantity", order.orderQuantity);
+                conn.Open();
+                int roweffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (roweffect > 0)
+                {
+                    return "Order added";
+                }
+                else
+                {
+                    return "Order not added";
+                }
+            }catch(Exception ex){
+                return ex.Message;
+            }
+           
+
+        }*/
         
         public string addOrders(string userEmail)
         {
@@ -1041,7 +1070,32 @@ namespace WebApp
             {
                 return ex.Message;
             }
-        } 
+        }
+            /*try
+            {
+
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "DeleteOrdersCartbyId";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@orderID", orderID);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "order deleted";
+                }
+                else
+                {
+                    return "order not deleted";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }*/
         
         public JsonResult  viewOrder()
         {
@@ -1140,7 +1194,7 @@ namespace WebApp
         public string Postreview(ReviewModel review)
         {
             try{
-            SqlCommand cmd = new SqlCommand("InsertReview", conn);
+            SqlCommand cmd = new SqlCommand("Insertreview", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@orderId", review.orderId);
             cmd.Parameters.AddWithValue("@name", review.name);

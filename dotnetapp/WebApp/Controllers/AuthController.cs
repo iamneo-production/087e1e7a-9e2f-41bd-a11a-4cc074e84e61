@@ -11,6 +11,7 @@ using System.Data;
 namespace WebApp.Controllers
 {
     [ApiController]
+
     
     public class AuthController : ControllerBase
     {   
@@ -18,9 +19,9 @@ namespace WebApp.Controllers
        
         [HttpPost]
         [Route("user/login")]
-        public string isUserPresent(LoginModel lm)
+        public IActionResult isUserPresent(LoginModel lm)
         { 
-            return bal.isUserPresent(lm);
+            return Created("User",bal.isUserPresent(lm));
         }
         [HttpPost]
         [Route("admin/login")]
@@ -30,9 +31,9 @@ namespace WebApp.Controllers
         }
         [HttpPost]
         [Route("user/signup")]
-        public string saveUser(UserModel user)
+        public IActionResult saveUser(UserModel user)
         {
-           return bal.saveUser(user);
+           return Created("SignUp",bal.saveUser(user));
             
         }
         [HttpPost]

@@ -11,7 +11,7 @@ using System.Data;
 namespace WebApp.Controllers
 {
     [ApiController]
-    
+   
     public class ThemeController : ControllerBase
     {   
     
@@ -19,9 +19,9 @@ namespace WebApp.Controllers
         
         [HttpGet]
         [Route("admin/getTheme")]
-        public List<ThemeModel> GetAllThemes()
+        public IActionResult GetAllThemes()
         {
-            return bal.GetAllThemes();
+            return Ok(bal.GetAllThemes());
         }
 
         
@@ -49,10 +49,10 @@ namespace WebApp.Controllers
 
         //user side theme selection and insertion
         [HttpGet]
-        [Route("user/getAllTheme")]
-        public List<ThemeModel> GetThemes()
+        [Route("user/getAllThemes")]
+        public IActionResult GetThemes()
         {
-            return bal.GetThemes();
+            return Ok(bal.GetThemes());
         }
 
         [HttpPost]
@@ -63,4 +63,4 @@ namespace WebApp.Controllers
         }
 
     }
-}
+} 
