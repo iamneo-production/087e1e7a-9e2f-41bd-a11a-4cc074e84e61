@@ -8,14 +8,25 @@ using Microsoft.Extensions.Logging;
 using WebApp.Models;
 using System.Data.SqlClient;
 using System.Data;
-using System.Xml.Linq;
 namespace WebApp.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class AdminOrderController : ControllerBase
-    {
-        private readonly BusinessLayer bal = new BusinessLayer();
-
-        [HttpGet]
+       public class AdminOrderController : ControllerBase
+    {   
+         private readonly BusinessLayer bal = new BusinessLayer();
+        
+       [HttpGet]
         [Route("admin/getAllOrders")]
+        public IActionResult viewOrder()
+        {
+
+            return bal.viewOrder();
+        }
+        [HttpDelete]
+        [Route("admin/deleteOrder")]
+        public string AdminDeleteOrder([FromBody] int orderID)
+        {
+            return bal.AdminDeleteOrder(orderID);
+        }
+    }
+}

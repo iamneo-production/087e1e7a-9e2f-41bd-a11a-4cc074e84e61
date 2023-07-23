@@ -11,22 +11,21 @@ using System.Data;
 namespace WebApp.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+  
     
     public class ReviewController : ControllerBase
     {   
     
-        private readonly BusinessLayer bal = new BusinessLayer();
+              private readonly BusinessLayer bal = new BusinessLayer();
 
          [HttpGet]
-         [Route("getreview")]
-        public List<ReviewModel> Get()
+    [Route("getreview")]
+        public List<ReviewModel> GetReviews()
         {
-            return bal.Get();
+            return bal.GetReviews();
         }
         // POST: api/Review
         [HttpPost]
-        
         [Route("insertreview")]
         public string Post(ReviewModel r)
         {
