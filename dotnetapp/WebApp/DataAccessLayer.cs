@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
-
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebApp.Models;
 using System.Data.SqlClient;
 using System.Data;
 using System.Xml.Linq;
+using WebApp.Models;
 namespace WebApp
 {
-      
-   public class DataAccessLayer
-     {   
+        public class DataAccessLayer
+        {   
             private string connectionString;
-        private readonly IConfiguration _configuration;
+      
         SqlConnection conn = null;
             public DataAccessLayer()
         {
@@ -24,58 +22,116 @@ namespace WebApp
             conn = new SqlConnection(connectionString);
         }
        
-       
+   
         //AuthController
-        public bool isUserPresent(LoginModel lm)
+        public string isUserPresent(LoginModel lm)
         { 
-            try{
-            SqlConnection con = new SqlConnection(connectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "LoginModel_IsUserPresent";
-            cmd.CommandType = CommandType.StoredProcedure;
+              try
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = conn;
+                            cmd.Parameters.AddWithValue("@email", lm.email);
+                            cmd.Parameters.AddWithValue("@password", lm.password);
 
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@email", lm.email);
-            cmd.Parameters.AddWithValue("@password", lm.password);
-            con.Open();
-            int count = (int)cmd.ExecuteScalar();
-            con.Close();
-            if (count > 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-            }catch{
-                return false;
-            }
-        }
-       
-        public bool isAdminPresent(LoginModel lm)
+                            // Check if the email and password match in the LoginModel table
+                            cmd.CommandText = "SELECT COUNT(*) FROM LoginModel WHERE email = @email AND password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+                            conn.Open();
+                            int userCount = (int)cmd.ExecuteScalar();
+                            conn.Close();
+
+                            if (userCount > 0)
+                            {
+                                return "valid"; // Both email and password are valid
+                            }
+                            else
+                            {
+                                // Check if the email exists in the LoginModel table
+                                cmd.CommandText = "SELECT COUNT(*) FROM LoginModel WHERE email = @email";
+                                conn.Open();
+                                int userEmailCount = (int)cmd.ExecuteScalar();
+                                conn.Close();
+
+                                // Check if the password exists in the LoginModel table
+                                cmd.CommandText = "SELECT COUNT(*) FROM LoginModel WHERE password = @password";
+                                conn.Open();
+                                int userPasswordCount = (int)cmd.ExecuteScalar();
+                                conn.Close();
+
+                                if (userEmailCount == 0 && userPasswordCount == 0)
+                                {
+                                    return "invalid"; // Both email and password are invalid
+                                }
+                                else if (userEmailCount == 0)
+                                {
+                                    return "invalid_email"; // Email doesn't exist in the LoginModel table
+                                }
+                                else
+                                {
+                                    return "invalid_password"; // Password is incorrect
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle any exceptions that might occur during database access or query execution.
+                        return "error";
+                    }
+                }
+        public string isAdminPresent(LoginModel lm)
         { 
-            try{
-            SqlConnection con = new SqlConnection(connectionString);
-                SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "AdminModel_IsAdminPresent";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
-            cmd.Parameters.AddWithValue("@email", lm.email);
-            cmd.Parameters.AddWithValue("@password", lm.password);
-            con.Open();
-            int count = (int)cmd.ExecuteScalar();
-            con.Close();
-            if (count > 0)
+             try
             {
-                return true;
+                using (SqlCommand cmd = new SqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@email", lm.email);
+                    cmd.Parameters.AddWithValue("@password", lm.password);
+
+                    // Check if the email and password match in the LoginModel table
+                    cmd.CommandText = "SELECT COUNT(*) FROM AdminModel WHERE email = @email AND password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+                    conn.Open();
+                    int userCount = (int)cmd.ExecuteScalar();
+                    conn.Close();
+
+                    if (userCount > 0)
+                    {
+                        return "valid"; // Both email and password are valid
+                    }
+                    else
+                    {
+                        // Check if the email exists in the LoginModel table
+                        cmd.CommandText = "SELECT COUNT(*) FROM AdminModel WHERE email = @email";
+                        conn.Open();
+                        int userEmailCount = (int)cmd.ExecuteScalar();
+                        conn.Close();
+
+                        // Check if the password exists in the LoginModel table
+                        cmd.CommandText = "SELECT COUNT(*) FROM AdminModel WHERE password = @password";
+                        conn.Open();
+                        int userPasswordCount = (int)cmd.ExecuteScalar();
+                        conn.Close();
+
+                        if (userEmailCount == 0 && userPasswordCount == 0)
+                        {
+                            return "invalid"; // Both email and password are invalid
+                        }
+                        else if (userEmailCount == 0)
+                        {
+                            return "invalid_email"; // Email doesn't exist in the LoginModel table
+                        }
+                        else
+                        {
+                            return "invalid_password"; // Password is incorrect
+                        }
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return false;
-            }
-            }catch{
-                return false;
+                // Handle any exceptions that might occur during database access or query execution.
+                return "error";
             }
         }
         
@@ -255,7 +311,7 @@ namespace WebApp
         }
        
 
-        public string getUser()
+        public List<UserModel> getUser()
         {
             try
             {
@@ -278,7 +334,154 @@ namespace WebApp
                     um.userRole = dr["userRole"].ToString();
                     umlist.Add(um);
                 }
-                return ("retrive all the user details");
+                return umlist;
+            }
+            catch (Exception ex)
+            {
+                return new List<UserModel>();
+            }
+        }
+
+         public UserModel getUserByEmail(string email)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_GetUserbyEmail";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", email);
+
+                UserModel user  = new UserModel();
+
+                conn.Open();
+                SqlDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    while (dr.Read())
+                    {
+                        user.username = dr["userName"].ToString();
+                        user.mobileNumber = dr["mobileNumber"].ToString();
+                    }
+                }
+                conn.Close();
+                return user;
+
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public string change(UserModel user)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_updatePassword";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", user.email);
+                cmd.Parameters.AddWithValue("@password", user.password);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "Password Updated";
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string UpdatePassword(LoginModel login)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "LoginModel_UpdatePassword";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", login.email);
+                cmd.Parameters.AddWithValue("@password", login.password);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {   
+                    UserModel user = new UserModel();
+                    user.email = login.email;   
+                    user.password = login.password; 
+                    return change(user);
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string updateMobileNumber(UserModel user)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_UpdateMobileNumber";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", user.email);
+                cmd.Parameters.AddWithValue("@mobileNumber", user.mobileNumber);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "Mobile Number Updated";
+                }
+                else
+                {
+                    return "Error";
+                }
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        public string updateusername(UserModel user)
+        {
+            try
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "UserModel_UpdateUsername";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = conn;
+                cmd.Parameters.AddWithValue("@email", user.email);
+                cmd.Parameters.AddWithValue("@username", user.username);
+                conn.Open();
+                int rowaffect = cmd.ExecuteNonQuery();
+                conn.Close();
+                if (rowaffect > 0)
+                {
+                    return "Username Updated";
+                }
+                else
+                {
+                    return "Error";
+                }
             }
             catch (Exception ex)
             {
@@ -593,7 +796,7 @@ namespace WebApp
                 return (ex.Message);
             }
         }
-        //userside gift
+        
         public string selectGift(GiftModel data)
         {
             try
@@ -628,9 +831,70 @@ namespace WebApp
 
         //Order Controller
          public string addOrdersCart(OrderModel order)
-        {
+        {  try
+             {
+                 // Check if the gift quantity is sufficient
+                 SqlCommand cmdCheckGiftQuantity = new SqlCommand("SELECT giftQuantity FROM GiftModel WHERE giftId = @GiftId", conn);
+                 cmdCheckGiftQuantity.Parameters.AddWithValue("@GiftId", order.giftModel.giftId);
+                 conn.Open();
+                 int availableQuantity = (int)cmdCheckGiftQuantity.ExecuteScalar();
+                 conn.Close();
+
+                 if (availableQuantity >= Convert.ToInt32(order.orderQuantity))
+                 {
+                     // Update gift quantity in the database
+                     SqlCommand cmdUpdateGiftQuantity = new SqlCommand("UPDATE GiftModel SET giftQuantity = giftQuantity  -  @orderQuantity  WHERE giftId =  @GIftId ", conn);
+                     cmdUpdateGiftQuantity.Parameters.AddWithValue("@GiftId", order.giftModel.giftId);
+                     cmdUpdateGiftQuantity.Parameters.AddWithValue("@orderQuantity", Convert.ToInt32(order.orderQuantity));
+                     conn.Open();
+                     int rowsAffected = cmdUpdateGiftQuantity.ExecuteNonQuery();
+                     conn.Close();
+
+                     if (rowsAffected > 0)
+                     {
+                         // Insert the order into OrdersCart table
+                         SqlCommand cmdAddOrder = new SqlCommand("addOrdersCart", conn);
+                         cmdAddOrder.CommandType = CommandType.StoredProcedure;
+                         cmdAddOrder.Parameters.AddWithValue("@orderName", order.orderName);
+                         cmdAddOrder.Parameters.AddWithValue("@orderDescription", order.orderDescription);
+                         cmdAddOrder.Parameters.AddWithValue("@ThemeModel", GetThemeModelXml(order.themeModel));
+                         cmdAddOrder.Parameters.AddWithValue("@GiftId", order.giftModel.giftId);
+                         cmdAddOrder.Parameters.AddWithValue("@orderDate", order.orderDate);
+                         cmdAddOrder.Parameters.AddWithValue("@orderPrice", order.orderPrice);
+                         cmdAddOrder.Parameters.AddWithValue("@orderAddress", order.orderAddress);
+                         cmdAddOrder.Parameters.AddWithValue("@orderPhone", order.orderPhone);
+                         cmdAddOrder.Parameters.AddWithValue("@orderEmail", order.orderEmail);
+                         cmdAddOrder.Parameters.AddWithValue("@orderQuantity", order.orderQuantity);
+                         conn.Open();
+                         int rowEffect = cmdAddOrder.ExecuteNonQuery();
+                         conn.Close();
+
+                         if (rowEffect > 0)
+                         {
+                             return "Order added";
+                         }
+                         else
+                         {
+                             return "Order not added";
+                         }
+                     }
+                     else
+                     {
+                         return "Order not added";
+                     }
+                 }
+                 else
+                 {
+                     return "Insufficient gift quantity";
+                 }
+             }
+             catch (Exception ex)
+             {
+                 return ex.Message;
+             }
+         }
             
-            try{
+           /* try{
                 SqlCommand cmd = new SqlCommand("addOrdersCart", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@orderName", order.orderName);
@@ -659,7 +923,7 @@ namespace WebApp
             }
            
 
-        }
+        }*/
         
         public string addOrders(string userEmail)
         {
@@ -706,8 +970,8 @@ namespace WebApp
         {
 
                 DataTable dt = new DataTable();
-                SqlCommand cmd = new SqlCommand("getOrdersCart", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand("SELECT orderID, orderName, orderDescription, ThemeModel, GiftModel.giftName, GiftModel.giftPrice ,orderDate, orderPrice, orderAddress, orderPhone, orderEmail, orderQuantity FROM OrdersCart JOIN GiftModel ON OrdersCart.GiftId = GiftModel.giftId WHERE orderEmail = @userEmail;", conn);
+                cmd.CommandType = CommandType.Text;
                 cmd.Parameters.AddWithValue("@userEmail", userEmail);
                 SqlDataAdapter da = new SqlDataAdapter(cmd);
                 da.Fill(dt);
@@ -739,7 +1003,7 @@ namespace WebApp
                 cmd.Parameters.AddWithValue("@orderName", order.orderName);
                 cmd.Parameters.AddWithValue("@orderDescription", order.orderDescription);
                 cmd.Parameters.AddWithValue("@themeModel", GetThemeModelXml(order.themeModel));
-               
+               //cmd.Parameters.AddWithValue("@orderPrice",order.orderPrice);
                 cmd.Parameters.AddWithValue("@orderDate", order.orderDate);
               
                 cmd.Parameters.AddWithValue("@orderAddress", order.orderAddress);
@@ -765,12 +1029,53 @@ namespace WebApp
         }
        
         public string deleteOrder(int orderID)
-        {
-            try
+        { try
+            {
+                SqlCommand cmdCheckOrderQuantity = new SqlCommand("SELECT orderQuantity FROM OrdersCart WHERE orderID = @orderID", conn);
+                cmdCheckOrderQuantity.Parameters.AddWithValue("@orderID", orderID);
+                conn.Open();
+                string availableQuantity = (string)cmdCheckOrderQuantity.ExecuteScalar();
+                conn.Close();
+                SqlCommand cmdCheckGiftId = new SqlCommand("SELECT GiftId FROM OrdersCart WHERE orderID = @orderID", conn);
+                cmdCheckGiftId.Parameters.AddWithValue("@orderID", orderID);
+                conn.Open();
+                int gi = (int)cmdCheckGiftId.ExecuteScalar();
+                conn.Close();
+                SqlCommand cmdUpdateGift  = new SqlCommand("UPDATE GiftModel SET giftQuantity = giftQuantity + @orderQuantity WHERE giftId = @GIftId", conn);
+                cmdUpdateGift.Parameters.AddWithValue("@GiftId", gi);
+                cmdUpdateGift.Parameters.AddWithValue("@orderQuantity",Convert.ToInt32(availableQuantity));
+                conn.Open();
+                int rowsAffected = cmdUpdateGift.ExecuteNonQuery();
+                conn.Close();
+                
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.CommandText = "DeleteOrdersCartbyId";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = conn;
+                    cmd.Parameters.AddWithValue("@orderID", orderID);
+                    conn.Open();
+                    int rowaffect = cmd.ExecuteNonQuery();
+                    conn.Close();
+                    if (rowaffect > 0)
+                    {
+                        return "order deleted";
+                    }
+                    else
+                    {
+                        return "order not deleted";
+                    }
+                }
+                 
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+            /*try
             {
 
                 SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "DeleteOrdersCart";
+                cmd.CommandText = "DeleteOrdersCartbyId";
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Connection = conn;
                 cmd.Parameters.AddWithValue("@orderID", orderID);
@@ -790,31 +1095,31 @@ namespace WebApp
             {
                 return ex.Message;
             }
-        }
-
-        //admin side order part
-        public IActionResult viewOrder()
+        }*/
+        
+        public JsonResult  viewOrder()
         {
-
-            DataTable dt = new DataTable();
-            SqlCommand cmd = new SqlCommand("ViewOrders", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            SqlDataAdapter da = new SqlDataAdapter(cmd);
-            da.Fill(dt);
-            List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
-            foreach (DataRow row in dt.Rows)
-            {
+            
+                DataTable dt = new DataTable();
+                SqlCommand cmd = new SqlCommand("ViewOrders", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+              
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+                foreach (DataRow row in dt.Rows)
+                {
                 Dictionary<string, object> order = new Dictionary<string, object>();
                 foreach (DataColumn col in dt.Columns)
                 {
-                    order[col.ColumnName] = row[col];
+                order[col.ColumnName] = row[col];
                 }
                 orders.Add(order);
-            }
-            return new JsonResult(orders);
+                }
+                return new JsonResult(orders);
+                
+              
         }
-
         public string AdminDeleteOrder(int orderID)
         {
             try
@@ -842,53 +1147,73 @@ namespace WebApp
                 return ex.Message;
             }
         }
+        public JsonResult  MyOrders(string email)
+        {            
+                DataTable dt = new DataTable();
+                SqlCommand cmd = new SqlCommand("SELECT orderID, orderName, orderDescription, ThemeModel, GiftModel.giftName, GiftModel.giftPrice ,orderDate, orderPrice, orderAddress, orderPhone, orderEmail, orderQuantity FROM Orders JOIN GiftModel ON Orders.GiftId = GiftModel.giftId WHERE orderEmail = @email;", conn);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@email", email);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                da.Fill(dt);
+                List<Dictionary<string, object>> orders = new List<Dictionary<string, object>>();
+                foreach (DataRow row in dt.Rows)
+                {
+                Dictionary<string, object> order = new Dictionary<string, object>();
+                foreach (DataColumn col in dt.Columns)
+                {
+                order[col.ColumnName] = row[col];
+                }
+                orders.Add(order);
+                }
+                return new JsonResult(orders);
+        }
 
         //Review Controller
 
-        public List<ReviewModel> Get()
+         public List<ReviewModel> GetReviews()
         {
-            List<ReviewModel> reviewobj = new List<ReviewModel>();
-            SqlDataReader sdr = null;
-            SqlCommand cmd = new SqlCommand("Get_Review", conn);
+	     List<ReviewModel> reviews=new List<ReviewModel>();
+         SqlDataReader sdr=null;
+            SqlCommand cmd = new SqlCommand("Getreview", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             conn.Open();
             sdr = cmd.ExecuteReader();
-            while (sdr.Read() == true)
+            while(sdr.Read()==true)
             {
-                ReviewModel r = new ReviewModel();
-                r.name = sdr["name"].ToString();
-                r.comments = sdr["comments"].ToString();
+                ReviewModel review = new ReviewModel();
+                review.orderId= Convert.ToInt32(sdr["orderId"]);
+                review.name = sdr["name"].ToString();
+                review.comments=sdr["comments"].ToString();
 
-                reviewobj.Add(r);
+                reviews.Add(review);
             }
             conn.Close();
-            return reviewobj;
+            return reviews;
         }
-
-        public string Postreview(ReviewModel r)
+       
+        public string Postreview(ReviewModel review)
         {
-            try
+            try{
+            SqlCommand cmd = new SqlCommand("Insertreview", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@orderId", review.orderId);
+            cmd.Parameters.AddWithValue("@name", review.name);
+            cmd.Parameters.AddWithValue("@comments", review.comments);
+            conn.Open();
+            int rowaffect = cmd.ExecuteNonQuery();
+            conn.Close();
+            if(rowaffect>0)
             {
-                SqlCommand cmd = new SqlCommand("Insert_Review", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("@name", r.name);
-                cmd.Parameters.AddWithValue("@comments", r.comments);
-                conn.Open();
-                int rowaffect = cmd.ExecuteNonQuery();
-                conn.Close();
-                if (rowaffect > 0)
-                {
-                    return "inserted sucessfully";
-                }
-                else
-                {
-                    return "inserted failed";
-                }
+                return "inserted sucessfully";
             }
-            catch (Exception ex)
+            else
             {
+                return "inserted failed";
+            }
+            }
+            catch(Exception ex){
                 return ex.Message;
             }
         }
-    }
+    }   
 }

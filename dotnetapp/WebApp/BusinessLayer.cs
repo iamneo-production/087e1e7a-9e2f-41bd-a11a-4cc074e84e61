@@ -13,12 +13,12 @@ namespace WebApp
   private readonly DataAccessLayer _dataAccessLayer = new DataAccessLayer();
 
         // AuthController
-        public bool isUserPresent(LoginModel lm)
+        public string isUserPresent(LoginModel lm)
         {
             return _dataAccessLayer.isUserPresent(lm);
         }
 
-        public bool isAdminPresent(LoginModel lm)
+        public string isAdminPresent(LoginModel lm)
         {
             return _dataAccessLayer.isAdminPresent(lm);
         }
@@ -49,9 +49,25 @@ namespace WebApp
             return _dataAccessLayer.editUser(userID, user);
         }
 
-        public string getUser()
+        public List<UserModel> getUser()
         {
             return _dataAccessLayer.getUser();
+        }
+
+        public UserModel getUserByEmail(string email){
+            return _dataAccessLayer.getUserByEmail(email);
+        }
+
+        public string UpdatePassword(LoginModel login){
+            return _dataAccessLayer.UpdatePassword(login);
+        }
+
+        public string updateMobileNumber(UserModel user){
+            return _dataAccessLayer.updateMobileNumber(user);
+        }
+
+        public string updateusername(UserModel user){
+            return _dataAccessLayer.updateusername(user);
         }
 
         // ThemeController
@@ -152,21 +168,26 @@ namespace WebApp
            return _dataAccessLayer.viewOrder();
         }
 
-        public string AdminDeleteOrder(int orderID)
+         public IActionResult MyOrders(string email)
+        {
+
+           return _dataAccessLayer.MyOrders(email);
+        }
+
+        public string AdminDeleteOrder( int orderID)
         {
             return _dataAccessLayer.AdminDeleteOrder(orderID);
         }
-
         //Review Controller
 
-        public List<ReviewModel> Get()
+         public List<ReviewModel> GetReviews()
         {
-            return _dataAccessLayer.Get();
+	     return _dataAccessLayer.GetReviews();
         }
-
-        public string Postreview(ReviewModel r)
+       
+        public string Postreview(ReviewModel review)
         {
-            return _dataAccessLayer.Postreview(r);
+            return _dataAccessLayer.Postreview(review);
         }
     }
 }
