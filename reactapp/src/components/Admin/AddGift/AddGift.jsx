@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import React, { useState } from "react";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import { toast } from 'react-toastify';
@@ -79,7 +78,7 @@ const AddGift = (props) => {
     setErrors(formErrors);
 
     if (!hasErrors) {
-      const url = "https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addGift";
+      const url = "https://8080-dcfcfccddeabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addGift";
       axios.post(url, giftData)
         .then((result) => {
           if (result.data === "Gift added") {
