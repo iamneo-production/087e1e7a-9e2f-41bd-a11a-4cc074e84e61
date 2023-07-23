@@ -5,10 +5,10 @@ using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using dotnetapp.Models;
+using WebApp.Models;
 using System.Data.SqlClient;
 using System.Data;
-namespace dotnetapp.Controllers
+namespace WebApp.Controllers
 {
     [ApiController]
 

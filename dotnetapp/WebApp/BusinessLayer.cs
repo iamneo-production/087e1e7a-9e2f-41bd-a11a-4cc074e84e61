@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using dotnetapp.Models;
+using WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
-
-namespace dotnetapp
+namespace WebApp
 {
     public class BusinessLayer
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace dotnetapp.Models
+namespace WebApp.Models
 {
     public class GiftModel
     {

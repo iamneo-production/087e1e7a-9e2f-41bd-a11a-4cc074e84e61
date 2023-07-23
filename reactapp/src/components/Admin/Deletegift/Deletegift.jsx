@@ -9,6 +9,7 @@ const Deletegift = (props) =>{
     const handleDelete=(id)=>{
         //Delete Theme Api
        
+
         axios.delete('https://8080-dcfcfccddeabadfbbdfdacbcfcecaabcfba.project.examly.io/admin/deleteGift/'+id)
           .then(response => {
             if(response.data==="Gift Deleted")
