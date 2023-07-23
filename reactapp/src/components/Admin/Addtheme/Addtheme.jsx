@@ -69,21 +69,20 @@ const Addtheme = (props) => {
       isValid = false;
     }
 
-      //Add Theme
-    const handleAddTheme = (e) =>{
-        e.preventDefault();
-          const themeData = {
-              themename : ThemeName,
-              themeprice : ThemePrice,
-              themedetails : Themedescription
-          }
-        
-            //Add theme Api
-            if(themeData.themename!=="" && themeData.themeDetails!=="" && themeData.themeprice!==""){
-          const url = "https://8080-dcfcfccddeabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
-          axios.post(url,themeData).then((result)=>{
-            console.log(result.data)
-            if(result.data==="Theme Added"){
+    if (isValid) {
+      const themeData = {
+        themename: ThemeName,
+        themeprice: ThemePrice,
+        themedetails: ThemeDescription,
+      };
+
+      const url =
+        "https://8080-dcfcfccddeabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/addTheme";
+      axios
+        .post(url, themeData)
+        .then((result) => {
+          console.log(result.data);
+          if (result.data === "Theme Added") {
             props.onThemeAdded();
             toast.success("Theme Added");
             setThemeName(""); // Clear the ThemeName field

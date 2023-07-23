@@ -25,10 +25,13 @@ const Login=(props)=>{
                 localStorage.setItem("isAuth" ,true);
                 localStorage.setItem("role" ,"User");
                 navigate('/Homepage');
-              }else {
+                //toast.success("Login success!");
+                showCustomSuccessMessage();
+              }
+              else{
                 axios.post("https://8080-dcfcfccddeabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/login", data)
-                .then((result) => {
-                      if(result.data === true){
+                .then((result1) => {
+                      if(result1.data === "valid"){
 
                         localStorage.setItem("isAuth" ,true);
                         localStorage.setItem("role" ,"Admin");
