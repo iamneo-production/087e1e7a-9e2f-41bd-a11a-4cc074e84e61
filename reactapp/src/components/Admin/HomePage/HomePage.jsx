@@ -4,7 +4,7 @@ import { Table } from "react-bootstrap";
 import './HomePage.css';
 import AddGift from "../AddGift/AddGift";
 import axios from "axios";
-import Editgift from "../Editgift/Editgift";
+import Editgift from "../Editgift/Editgift"
 import Deletegift from "../Deletegift/Deletegift";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,7 +17,7 @@ const HomePage=()=>{
     
     useEffect(() => {
       //Get themes Api
-    axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcefeddcbcbaffb.project.examly.io/admin/getGift')
+    axios.get('https://8080-dafbecdaebfdaaaabadfbbdfdacbcfcecaabcfba.project.examly.io/admin/getGift')
       .then(response => {
       setGifts(response.data);
      
