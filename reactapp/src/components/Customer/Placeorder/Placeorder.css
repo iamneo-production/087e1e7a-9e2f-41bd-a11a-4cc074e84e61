@@ -1,0 +1,29 @@
+.placeorderform {
+  position: relative;
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.placeorderform .form-control {
+  width: 400px;
+}
+
+.placeorderform > div {
+  padding: 70px;
+}
+#placeOrder,#updateOrder {
+  
+  position: absolute;
+  bottom: 2px;
+  right: 90px;
+}
+.placeorderform .form-check{
+    width: 400px;
+    
+}
+#selectThemeModel {
+width: 400px;
+background-color: rgb(250, 246, 246);
+color: black; 
+}
